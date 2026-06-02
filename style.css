@@ -428,16 +428,6 @@ body.light #modeToggle {
   font-size: 0.8rem;
   color: var(--text-muted);
 }
-.tool-tag {
-  margin-left: auto;
-  align-self: center;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(15,23,42,0.9);
-  border: 1px solid rgba(148,163,184,0.5);
-  color: var(--text-muted);
-}
 
 /* FOOTER */
 .footer {
