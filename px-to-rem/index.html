@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PX ↔ REM Converter - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    label { display:block; margin-top:10px; }
+    input { padding:6px; width:150px; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>PX ↔ REM Converter</h1>
 
+  <label>Base font size (px):
+    <input type="number" id="base" value="16">
+  </label>
+
+  <label>Pixels (px):
+    <input type="number" id="px">
+  </label>
+
+  <label>REM:
+    <input type="number" id="rem" step="0.01">
+  </label>
+
+  <script>
+    const base = document.getElementById('base');
+    const px = document.getElementById('px');
+    const rem = document.getElementById('rem');
+
+    function updateFromPx() {
+      const b = parseFloat(base.value) || 16;
+      const p = parseFloat(px.value);
+      if (!isNaN(p)) rem.value = (p / b).toFixed(3);
+    }
+
+    function updateFromRem() {
+      const b = parseFloat(base.value) || 16;
+      const r = parseFloat(rem.value);
+      if (!isNaN(r)) px.value = (r * b).toFixed(1);
+    }
+
+    px.addEventListener('input', updateFromPx);
+    rem.addEventListener('input', updateFromRem);
+    base.addEventListener('input', () => {
+      if (px.value) updateFromPx();
+      if (rem.value) updateFromRem();
+    });
+  </script>
+</body>
+</html>
