@@ -2,38 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Word & Character Counter - Tools for All</title>
+  <title>Case Converter</title>
   <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
   <div class="tool-page">
     <div class="tool-header">
-      <a href="../" class="back-link">← Back to Tools for All</a>
-      <h1>Word & Character Counter</h1>
+      <a class="back-link" href="../">← Back</a>
+      <h1>Case Converter</h1>
     </div>
 
-    <textarea id="text" rows="10" placeholder="Start typing or paste your text here..."></textarea>
+    <textarea id="text" rows="10" placeholder="Enter text..."></textarea>
 
-    <p style="margin-top:12px;">
-      Words: <span id="words">0</span> ·
-      Characters: <span id="chars">0</span> ·
-      Characters (no spaces): <span id="charsNoSpaces">0</span>
-    </p>
+    <div style="margin-top:15px;">
+      <button data-mode="upper">UPPERCASE</button>
+      <button data-mode="lower">lowercase</button>
+      <button data-mode="title">Title Case</button>
+      <button data-mode="sentence">Sentence case</button>
+    </div>
   </div>
 
   <script>
-    const text = document.getElementById('text');
-    const words = document.getElementById('words');
-    const chars = document.getElementById('chars');
-    const charsNoSpaces = document.getElementById('charsNoSpaces');
+    const t = document.getElementById("text");
 
-    text.addEventListener('input', () => {
-      const value = text.value;
-      const trimmed = value.trim();
-      const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
-      words.textContent = wordCount;
-      chars.textContent = value.length;
-      charsNoSpaces.textContent = value.replace(/\s/g, '').length;
+    document.querySelectorAll("button").forEach(btn => {
+      btn.onclick = () => {
+        let v = t.value;
+        const m = btn.dataset.mode;
+
+        if (m === "upper") v = v.toUpperCase();
+        if (m === "lower") v = v.toLowerCase();
+        if (m === "title") v = v.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+        if (m === "sentence") v = v.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+
+        t.value = v;
+      };
     });
   </script>
 </body>
