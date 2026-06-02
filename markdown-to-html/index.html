@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown ↔ HTML Converter - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    textarea { width:48%; height:250px; padding:10px; font-family: monospace; }
+    .container { display:flex; gap:4%; flex-wrap:wrap; }
+    button { margin:10px 0; padding:8px 14px; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>Markdown ↔ HTML Converter</h1>
+  <div class="container">
+    <div>
+      <h3>Markdown</h3>
+      <textarea id="md" placeholder="# Hello"></textarea>
+    </div>
+    <div>
+      <h3>HTML</h3>
+      <textarea id="html" placeholder="&lt;h1&gt;Hello&lt;/h1&gt;"></textarea>
+    </div>
+  </div>
+  <button id="toHtml">Markdown → HTML</button>
+  <button id="toMd">HTML → Markdown (basic)</button>
+
+  <script>
+    const md = document.getElementById('md');
+    const html = document.getElementById('html');
+    const toHtml = document.getElementById('toHtml');
+    const toMd = document.getElementById('toMd');
+
+    function simpleMarkdownToHtml(text) {
+      return text
+        .replace(/^###### (.*$)/gim, '<h6>$1</h6>')
+        .replace(/^##### (.*$)/gim, '<h5>$1</h5>')
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*)\*/gim, '<i>$1</i>')
+        .replace(/\n/gim, '<br>');
+    }
+
+    function simpleHtmlToMarkdown(text) {
+      return text
+        .replace(/<h1>(.*?)<\/h1>/gim, '# $1\n')
+        .replace(/<h2>(.*?)<\/h2>/gim, '## $1\n')
+        .replace(/<h3>(.*?)<\/h3>/gim, '### $1\n')
+        .replace(/<b>(.*?)<\/b>/gim, '**$1**')
+        .replace(/<i>(.*?)<\/i>/gim, '*$1*')
+        .replace(/<br\s*\/?>/gim, '\n');
+    }
+
+    toHtml.addEventListener('click', () => {
+      html.value = simpleMarkdownToHtml(md.value);
+    });
+
+    toMd.addEventListener('click', () => {
+      md.value = simpleHtmlToMarkdown(html.value);
+    });
+  </script>
+</body>
+</html>
 
