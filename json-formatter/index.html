@@ -1,45 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>JSON Formatter</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>JSON Formatter — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>JSON Formatter</h1>
+
+  <!-- Orbs (reuse global aesthetic) -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar (same as homepage) -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <textarea id="input" rows="10" placeholder="Paste JSON here..."></textarea>
+  <!-- Tool Hero (tool-specific) -->
+  <section class="tool-hero tool-hero-json">
+    <div class="tool-hero-inner">
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Developer · JSON</div>
+        <h1>JSON Formatter</h1>
+        <p>
+          Paste messy JSON, get beautifully formatted, validated output with one click.
+          Built for speed, clarity, and real‑world debugging.
+        </p>
+        <div class="tool-hero-meta">
+          <span>⚡ Pretty & minify</span>
+          <span>✅ Validation feedback</span>
+          <span>🧩 Copy‑ready output</span>
+        </div>
+      </div>
 
-    <div style="margin-top:15px;">
-      <button id="format">Format</button>
-      <button id="minify">Minify</button>
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code">
+              <pre>{
+  "valid": true,
+  "indent": 2,
+  "preview": "{ \n  \\"name\\": \\"Kevin\\" \n}"
+}</pre>
+            </div>
+            <div class="tool-hero-badges">
+              <span>Dev‑grade formatting</span>
+              <span>Monospace preview</span>
+              <span>Dark / Light aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <p id="error" style="color:#ef4444; margin-top:10px;"></p>
-  </div>
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+      <div class="tool-panel-header">
+        <h2>Format your JSON</h2>
+        <p>Paste JSON on the left, choose an action, and get clean output on the right.</p>
+      </div>
+
+      <div class="tool-panel-body tool-panel-body-split">
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Input JSON</span>
+            <button class="pill-btn pill-btn-ghost" id="sampleJsonBtn">Load sample</button>
+          </div>
+          <textarea id="jsonInput" spellcheck="false" placeholder='{
+  "name": "Kevin",
+  "role": "Creator"
+}'></textarea>
+        </div>
+
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Output</span>
+            <button class="pill-btn pill-btn-ghost" id="copyOutputBtn">Copy</button>
+          </div>
+          <textarea id="jsonOutput" spellcheck="false" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left">
+          <button class="pill-btn pill-btn-primary" id="formatBtn">Pretty Print</button>
+          <button class="pill-btn pill-btn-ghost" id="minifyBtn">Minify</button>
+        </div>
+        <div class="tool-status" id="statusBar">Waiting for input…</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — JSON Formatter</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const input = document.getElementById("input");
-    const error = document.getElementById("error");
+    // Theme toggle (same logic as homepage)
+    const modeToggle = document.getElementById('modeToggle');
 
-    document.getElementById("format").onclick = () => {
-      try {
-        error.textContent = "";
-        input.value = JSON.stringify(JSON.parse(input.value), null, 2);
-      } catch (e) { error.textContent = "Invalid JSON"; }
-    };
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
 
-    document.getElementById("minify").onclick = () => {
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // JSON formatter logic
+    const inputEl = document.getElementById('jsonInput');
+    const outputEl = document.getElementById('jsonOutput');
+    const statusBar = document.getElementById('statusBar');
+    const formatBtn = document.getElementById('formatBtn');
+    const minifyBtn = document.getElementById('minifyBtn');
+    const sampleBtn = document.getElementById('sampleJsonBtn');
+    const copyBtn = document.getElementById('copyOutputBtn');
+
+    function setStatus(text, ok = true) {
+      statusBar.textContent = text;
+      statusBar.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    function parseJson() {
+      const raw = inputEl.value.trim();
+      if (!raw) {
+        setStatus('No input provided.', false);
+        return null;
+      }
       try {
-        error.textContent = "";
-        input.value = JSON.stringify(JSON.parse(input.value));
-      } catch (e) { error.textContent = "Invalid JSON"; }
-    };
+        const parsed = JSON.parse(raw);
+        setStatus('Valid JSON ✔', true);
+        return parsed;
+      } catch (e) {
+        setStatus('Invalid JSON: ' + e.message, false);
+        return null;
+      }
+    }
+
+    formatBtn.addEventListener('click', () => {
+      const parsed = parseJson();
+      if (!parsed) return;
+      outputEl.value = JSON.stringify(parsed, null, 2);
+    });
+
+    minifyBtn.addEventListener('click', () => {
+      const parsed = parseJson();
+      if (!parsed) return;
+      outputEl.value = JSON.stringify(parsed);
+    });
+
+    sampleBtn.addEventListener('click', () => {
+      inputEl.value = JSON.stringify({
+        name: "Kevin",
+        role: "Creator",
+        tools: ["JSON Formatter", "QR Generator", "Invoice Builder"]
+      }, null, 2);
+      setStatus('Sample JSON loaded. Click Pretty Print or Minify.', true);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!outputEl.value.trim()) {
+        setStatus('Nothing to copy yet.', false);
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(outputEl.value);
+        setStatus('Output copied to clipboard.', true);
+      } catch {
+        setStatus('Could not copy to clipboard.', false);
+      }
+    });
   </script>
+
 </body>
 </html>
