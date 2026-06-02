@@ -1,44 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Case Converter</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Case Converter — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Case Converter</h1>
-    </div>
 
-    <textarea id="text" rows="10" placeholder="Enter text..."></textarea>
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-    <div style="margin-top:15px;">
-      <button data-mode="upper">UPPERCASE</button>
-      <button data-mode="lower">lowercase</button>
-      <button data-mode="title">Title Case</button>
-      <button data-mode="sentence">Sentence case</button>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
-  </div>
+  </header>
+
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
+
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Text · Transform</div>
+        <h1>Case Converter</h1>
+        <p>
+          Instantly convert text between uppercase, lowercase, title case, sentence case, and more — all inside a hacker‑lab interface.
+        </p>
+        <div class="tool-hero-meta">
+          <span>⇧ Uppercase</span>
+          <span>⇩ Lowercase</span>
+          <span>🧠 Smart Title Case</span>
+        </div>
+      </div>
+
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre>convert("kevin manzi", "title")
+→ "Kevin Manzi"
+
+convert("HELLO WORLD", "lower")
+→ "hello world"</pre>
+            </div>
+
+            <div class="tool-hero-badges">
+              <span>Mixed previews</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Convert your text</h2>
+        <p>Select a case style and instantly transform your text.</p>
+      </div>
+
+      <div class="tool-panel-body tool-panel-body-split">
+
+        <!-- Input -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Input Text</span>
+            <button class="pill-btn pill-btn-ghost" id="sampleCaseBtn">Load sample</button>
+          </div>
+
+          <textarea id="caseInput" placeholder="Type or paste text here..."></textarea>
+        </div>
+
+        <!-- Output -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Output</span>
+            <button class="pill-btn pill-btn-ghost" id="copyCaseBtn">Copy</button>
+          </div>
+
+          <textarea id="caseOutput" readonly placeholder="Converted text will appear here..."></textarea>
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="tool-actions-row">
+        <div class="tool-actions-left">
+          <button class="pill-btn pill-btn-primary" id="toUpperBtn">UPPERCASE</button>
+          <button class="pill-btn pill-btn-ghost" id="toLowerBtn">lowercase</button>
+          <button class="pill-btn pill-btn-ghost" id="toTitleBtn">Title Case</button>
+          <button class="pill-btn pill-btn-ghost" id="toSentenceBtn">Sentence case</button>
+        </div>
+
+        <div class="tool-status" id="caseStatus">Waiting for input…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Case Converter</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const t = document.getElementById("text");
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    document.querySelectorAll("button").forEach(btn => {
-      btn.onclick = () => {
-        let v = t.value;
-        const m = btn.dataset.mode;
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
 
-        if (m === "upper") v = v.toUpperCase();
-        if (m === "lower") v = v.toLowerCase();
-        if (m === "title") v = v.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-        if (m === "sentence") v = v.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
 
-        t.value = v;
-      };
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Case Converter Logic
+    const caseInput = document.getElementById('caseInput');
+    const caseOutput = document.getElementById('caseOutput');
+    const caseStatus = document.getElementById('caseStatus');
+
+    const sampleCaseBtn = document.getElementById('sampleCaseBtn');
+    const copyCaseBtn = document.getElementById('copyCaseBtn');
+
+    const toUpperBtn = document.getElementById('toUpperBtn');
+    const toLowerBtn = document.getElementById('toLowerBtn');
+    const toTitleBtn = document.getElementById('toTitleBtn');
+    const toSentenceBtn = document.getElementById('toSentenceBtn');
+
+    function setCaseStatus(text, ok = true) {
+      caseStatus.textContent = text;
+      caseStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    function titleCase(str) {
+      return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function sentenceCase(str) {
+      const lower = str.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }
+
+    function convert(fn) {
+      const text = caseInput.value;
+      if (!text.trim()) {
+        setCaseStatus('No input provided.', false);
+        return;
+      }
+      caseOutput.value = fn(text);
+      setCaseStatus('Converted successfully.', true);
+    }
+
+    toUpperBtn.addEventListener('click', () => convert(t => t.toUpperCase()));
+    toLowerBtn.addEventListener('click', () => convert(t => t.toLowerCase()));
+    toTitleBtn.addEventListener('click', () => convert(titleCase));
+    toSentenceBtn.addEventListener('click', () => convert(sentenceCase));
+
+    sampleCaseBtn.addEventListener('click', () => {
+      caseInput.value = "kevin is building the cleanest tool suite on the internet.";
+      setCaseStatus('Sample text loaded.', true);
+    });
+
+    copyCaseBtn.addEventListener('click', async () => {
+      if (!caseOutput.value.trim()) {
+        setCaseStatus('Nothing to copy.', false);
+        return;
+      }
+      await navigator.clipboard.writeText(caseOutput.value);
+      setCaseStatus('Output copied.', true);
     });
   </script>
+
 </body>
 </html>
