@@ -1,39 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PX ↔ REM Converter</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>PX ↔ REM Converter — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>PX ↔ REM Converter</h1>
+
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <label>Base font size (px)</label>
-    <input id="base" type="number" value="16">
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
 
-    <label>Pixels (px)</label>
-    <input id="px" type="number">
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Developer · CSS</div>
+        <h1>PX ↔ REM Converter</h1>
+        <p>
+          Convert pixel values to rem units and back — using a clean hacker‑lab interface with instant calculations.
+        </p>
+        <div class="tool-hero-meta">
+          <span>📏 Base font size aware</span>
+          <span>🔁 Two‑way conversion</span>
+          <span>⚡ Instant output</span>
+        </div>
+      </div>
 
-    <label>REM</label>
-    <input id="rem" type="number" step="0.01">
-  </div>
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre>px_to_rem(32, base=16)
+→ 2rem
+
+rem_to_px(1.5, base=16)
+→ 24px</pre>
+            </div>
+
+            <div class="tool-hero-badges">
+              <span>Mixed previews</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Convert PX ↔ REM</h2>
+        <p>Enter a value and convert instantly in either direction.</p>
+      </div>
+
+      <div class="tool-panel-body">
+
+        <div class="pxrem-grid">
+
+          <!-- Controls -->
+          <div class="pxrem-controls">
+
+            <label class="field-row">
+              <span>Base Font Size (px)</span>
+              <input id="baseSize" type="number" min="8" max="32" value="16" />
+            </label>
+
+            <label class="field-row">
+              <span>PX</span>
+              <input id="pxInput" type="number" placeholder="e.g. 24" />
+            </label>
+
+            <label class="field-row">
+              <span>REM</span>
+              <input id="remInput" type="number" step="0.01" placeholder="e.g. 1.5" />
+            </label>
+
+            <button class="pill-btn pill-btn-primary" id="convertPxBtn" style="margin-top:10px;">
+              PX → REM
+            </button>
+
+            <button class="pill-btn pill-btn-ghost" id="convertRemBtn">
+              REM → PX
+            </button>
+
+          </div>
+
+          <!-- Output -->
+          <div class="pxrem-output">
+            <div class="tool-column-header">
+              <span>Result</span>
+              <button class="pill-btn pill-btn-ghost" id="copyPxRemBtn">Copy</button>
+            </div>
+
+            <input id="pxremOutput" type="text" readonly placeholder="Converted value will appear here..." />
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left"></div>
+        <div class="tool-status" id="pxremStatus">Waiting for input…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — PX ↔ REM Converter</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const base = document.getElementById("base");
-    const px = document.getElementById("px");
-    const rem = document.getElementById("rem");
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    px.oninput = () => rem.value = (px.value / base.value).toFixed(3);
-    rem.oninput = () => px.value = (rem.value * base.value).toFixed(1);
-    base.oninput = () => {
-      if (px.value) rem.value = (px.value / base.value).toFixed(3);
-      if (rem.value) px.value = (rem.value * base.value).toFixed(1);
-    };
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
+
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // PX ↔ REM Logic
+    const baseSize = document.getElementById('baseSize');
+    const pxInput = document.getElementById('pxInput');
+    const remInput = document.getElementById('remInput');
+    const pxremOutput = document.getElementById('pxremOutput');
+    const pxremStatus = document.getElementById('pxremStatus');
+
+    const convertPxBtn = document.getElementById('convertPxBtn');
+    const convertRemBtn = document.getElementById('convertRemBtn');
+    const copyPxRemBtn = document.getElementById('copyPxRemBtn');
+
+    function setPxRemStatus(text, ok = true) {
+      pxremStatus.textContent = text;
+      pxremStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    convertPxBtn.addEventListener('click', () => {
+      const base = parseFloat(baseSize.value) || 16;
+      const px = parseFloat(pxInput.value);
+
+      if (isNaN(px)) {
+        setPxRemStatus('Enter a valid PX value.', false);
+        return;
+      }
+
+      const rem = px / base;
+      pxremOutput.value = rem + "rem";
+      setPxRemStatus('Converted PX → REM.', true);
+    });
+
+    convertRemBtn.addEventListener('click', () => {
+      const base = parseFloat(baseSize.value) || 16;
+      const rem = parseFloat(remInput.value);
+
+      if (isNaN(rem)) {
+        setPxRemStatus('Enter a valid REM value.', false);
+        return;
+      }
+
+      const px = rem * base;
+      pxremOutput.value = px + "px";
+      setPxRemStatus('Converted REM → PX.', true);
+    });
+
+    copyPxRemBtn.addEventListener('click', async () => {
+      if (!pxremOutput.value.trim()) {
+        setPxRemStatus('Nothing to copy.', false);
+        return;
+      }
+      await navigator.clipboard.writeText(pxremOutput.value);
+      setPxRemStatus('Copied to clipboard.', true);
+    });
   </script>
+
 </body>
 </html>
