@@ -6,28 +6,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="container">
-    <h1>Convert, Create, and Simplify — All in One Place</h1>
-    <p>Free, ad‑free tools for developers, creators, and everyday users.</p>
-    <button onclick="location.href='#tools'">Explore Tools</button>
+  <header class="hero">
+    <div class="container">
+      <h1>Tools for All</h1>
+      <p>Free, ad‑free tools for developers, creators, and everyday users.</p>
+      <button class="btn-primary" onclick="location.href='#tools'">Explore Tools</button>
+    </div>
   </header>
 
-  <section id="tools" class="container">
-    <h2>Available Tools</h2>
-    <div class="card"><a href="word-counter/">Word & Character Counter</a></div>
-    <div class="card"><a href="px-to-rem/">PX ↔ REM Converter</a></div>
-    <div class="card"><a href="json-formatter/">JSON Formatter</a></div>
-    <div class="card"><a href="case-converter/">Case Converter</a></div>
-    <div class="card"><a href="invoice-generator/">Invoice Generator</a></div>
-    <div class="card"><a href="markdown-to-html/">Markdown ↔ HTML Converter</a></div>
-    <div class="card"><a href="qr-code-generator/">QR Code Generator</a></div>
-    <div class="card"><a href="password-generator/">Password Generator</a></div>
-    <div class="card"><a href="lorem-ipsum/">Lorem Ipsum Generator</a></div>
-    <div class="card"><a href="roi-calculator/">ROI Calculator</a></div>
-  </section>
+  <main class="container" id="tools">
+    <h2 class="section-title">All Tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card"><a href="word-counter/">Word & Character Counter</a></div>
+      <div class="tool-card"><a href="px-to-rem/">PX ↔ REM Converter</a></div>
+      <div class="tool-card"><a href="json-formatter/">JSON Formatter</a></div>
+      <div class="tool-card"><a href="case-converter/">Case Converter</a></div>
+      <div class="tool-card"><a href="invoice-generator/">Invoice Generator</a></div>
+      <div class="tool-card"><a href="markdown-to-html/">Markdown ↔ HTML Converter</a></div>
+      <div class="tool-card"><a href="qr-code-generator/">QR Code Generator</a></div>
+      <div class="tool-card"><a href="password-generator/">Password Generator</a></div>
+      <div class="tool-card"><a href="lorem-ipsum/">Lorem Ipsum Generator</a></div>
+      <div class="tool-card"><a href="roi-calculator/">ROI Calculator</a></div>
+    </div>
+  </main>
 
-  <footer class="container">
-    <p>© 2026 Tools for All — Built by Kevin Manzi</p>
+  <footer class="container" style="text-align:center; font-size:0.85rem; color:#9ca3af;">
+    © 2026 Tools for All — Built by Kevin Manzi
   </footer>
 </body>
 </html>
