@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word & Character Counter - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    textarea { width:100%; height:200px; padding:10px; font-size:1em; }
+    .stats { margin-top:15px; font-size:1.05em; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>Word & Character Counter</h1>
+  <textarea id="text" placeholder="Start typing or paste your text here..."></textarea>
+  <div class="stats">
+    Words: <span id="words">0</span> |
+    Characters: <span id="chars">0</span> |
+    Characters (no spaces): <span id="charsNoSpaces">0</span>
+  </div>
 
+  <script>
+    const text = document.getElementById('text');
+    const words = document.getElementById('words');
+    const chars = document.getElementById('chars');
+    const charsNoSpaces = document.getElementById('charsNoSpaces');
+
+    text.addEventListener('input', () => {
+      const value = text.value;
+      const trimmed = value.trim();
+      const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
+      words.textContent = wordCount;
+      chars.textContent = value.length;
+      charsNoSpaces.textContent = value.replace(/\s/g, '').length;
+    });
+  </script>
+</body>
+</html>
