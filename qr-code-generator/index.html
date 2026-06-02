@@ -2,77 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>QR Code Generator - Tools for All</title>
-  <style>
-    body {
-      font-family: Inter, sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 40px;
-      text-align: center;
-      color: #0a2540;
-    }
-    h1 { margin-bottom: 20px; }
-    input {
-      width: 60%;
-      max-width: 400px;
-      padding: 10px;
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 6px;
-      background: #007bff;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: #0056b3; }
-    img {
-      margin-top: 25px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-      position: absolute;
-      left: 40px;
-      top: 20px;
-    }
-  </style>
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>QR Code Generator</h1>
-  <input id="text" placeholder="Enter URL or text">
-  <br>
-  <button id="generate">Generate QR Code</button>
-  <div>
-    <img id="qr" alt="QR Code" />
+  <div class="tool-page" style="text-align:center;">
+    <div class="tool-header" style="justify-content:center; gap:16px;">
+      <a class="back-link" href="../">← Back</a>
+      <h1>QR Code Generator</h1>
+    </div>
+
+    <input id="text" placeholder="Enter URL or text" style="max-width:420px;">
+    <button id="generate" style="margin-top:15px;">Generate QR Code</button>
+
+    <img id="qr" class="qr-img" alt="QR Code">
   </div>
 
   <script>
-    const text = document.getElementById('text');
-    const btn = document.getElementById('generate');
-    const img = document.getElementById('qr');
+    document.getElementById("generate").onclick = () => {
+      const value = document.getElementById("text").value.trim();
+      if (!value) return alert("Enter text first.");
 
-    btn.addEventListener('click', () => {
-      const value = text.value.trim();
-      if (!value) {
-        alert('Please enter text or a URL.');
-        return;
-      }
       const encoded = encodeURIComponent(value);
-      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encoded}`;
-    });
+      document.getElementById("qr").src =
+        `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encoded}`;
+    };
   </script>
 </body>
 </html>
