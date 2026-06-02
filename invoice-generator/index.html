@@ -2,39 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Word & Character Counter - Tools for All</title>
+  <title>Invoice Generator</title>
   <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
   <div class="tool-page">
     <div class="tool-header">
-      <a href="../" class="back-link">← Back to Tools for All</a>
-      <h1>Word & Character Counter</h1>
+      <a class="back-link" href="../">← Back</a>
+      <h1>Invoice Generator</h1>
     </div>
 
-    <textarea id="text" rows="10" placeholder="Start typing or paste your text here..."></textarea>
+    <label>Client Name</label>
+    <input id="client">
 
-    <p style="margin-top:12px;">
-      Words: <span id="words">0</span> ·
-      Characters: <span id="chars">0</span> ·
-      Characters (no spaces): <span id="charsNoSpaces">0</span>
-    </p>
+    <label>Project Description</label>
+    <textarea id="desc" rows="4"></textarea>
+
+    <table id="items">
+      <thead>
+        <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button id="add">Add Item</button>
+    <button id="download">Download Invoice</button>
+
+    <p id="total" style="margin-top:20px; font-size:1.2rem;">Total: $0.00</p>
   </div>
 
   <script>
-    const text = document.getElementById('text');
-    const words = document.getElementById('words');
-    const chars = document.getElementById('chars');
-    const charsNoSpaces = document.getElementById('charsNoSpaces');
+    const tbody = document.querySelector("#items tbody");
+    const totalEl = document.getElementById("total");
 
-    text.addEventListener('input', () => {
-      const value = text.value;
-      const trimmed = value.trim();
-      const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
-      words.textContent = wordCount;
-      chars.textContent = value.length;
-      charsNoSpaces.textContent = value.replace(/\s/g, '').length;
-    });
+    function addRow() {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input class="name"></td>
+        <td><input type="number" class="qty" value="1"></td>
+        <td><input type="number" class="price" value="0" step="0.01"></td>
+        <td class="line">$0.00</td>
+      `;
+      tbody.appendChild(tr);
+      tr.querySelectorAll("input").forEach(i => i.oninput = updateTotals);
+      updateTotals();
+    }
+
+    function updateTotals() {
+      let total = 0;
+      tbody.querySelectorAll("tr").forEach(tr => {
+        const qty = parseFloat(tr.querySelector(".qty").value) || 0;
+        const price = parseFloat(tr.querySelector(".price").value) || 0;
+        const line = qty * price;
+        tr.querySelector(".line").textContent = "$" + line.toFixed(2);
+        total += line;
+      });
+      totalEl.textContent = "Total: $" + total.toFixed(2);
+    }
+
+    document.getElementById("add").onclick = addRow;
+    document.getElementById("download").onclick = () => window.print();
+
+    addRow();
   </script>
 </body>
 </html>
