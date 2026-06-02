@@ -1,41 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Lorem Ipsum Generator</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Lorem Ipsum Generator — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Lorem Ipsum Generator</h1>
+
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <label>Number of Paragraphs</label>
-    <input id="count" type="number" value="3" min="1" max="20">
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
 
-    <button id="generate" style="margin-top:15px;">Generate</button>
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Text · Generator</div>
+        <h1>Lorem Ipsum Generator</h1>
+        <p>
+          Instantly generate clean placeholder paragraphs, sentences, or words — formatted inside a hacker‑lab interface.
+        </p>
+        <div class="tool-hero-meta">
+          <span>📄 Paragraphs</span>
+          <span>📝 Sentences</span>
+          <span>🔤 Words</span>
+        </div>
+      </div>
 
-    <textarea id="output" rows="10" readonly style="margin-top:15px;"></textarea>
-  </div>
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre>lorem(2, "paragraphs")
+→ "Lorem ipsum dolor sit amet..."
+→ "Sed ut perspiciatis unde omnis..."</pre>
+            </div>
+
+            <div class="tool-hero-badges">
+              <span>Mixed previews</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Generate Lorem Ipsum</h2>
+        <p>Select the type and amount of text you want.</p>
+      </div>
+
+      <div class="tool-panel-body">
+
+        <div class="lorem-grid">
+
+          <!-- Controls -->
+          <div class="lorem-controls">
+
+            <label class="field-row">
+              <span>Amount</span>
+              <input id="loremAmount" type="number" min="1" max="20" value="3" />
+            </label>
+
+            <label class="field-row">
+              <input id="loremTypeParagraphs" name="loremType" type="radio" checked />
+              <span>Paragraphs</span>
+            </label>
+
+            <label class="field-row">
+              <input id="loremTypeSentences" name="loremType" type="radio" />
+              <span>Sentences</span>
+            </label>
+
+            <label class="field-row">
+              <input id="loremTypeWords" name="loremType" type="radio" />
+              <span>Words</span>
+            </label>
+
+            <button class="pill-btn pill-btn-primary" id="generateLoremBtn" style="margin-top:10px;">
+              Generate
+            </button>
+
+          </div>
+
+          <!-- Output -->
+          <div class="lorem-output">
+            <div class="tool-column-header">
+              <span>Generated Text</span>
+              <button class="pill-btn pill-btn-ghost" id="copyLoremBtn">Copy</button>
+            </div>
+
+            <textarea id="loremOutput" readonly placeholder="Generated text will appear here..."></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left"></div>
+        <div class="tool-status" id="loremStatus">Waiting for options…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Lorem Ipsum Generator</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const base = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.";
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    document.getElementById("generate").onclick = () => {
-      const n = parseInt(document.getElementById("count").value);
-      let text = "";
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
 
-      for (let i = 0; i < n; i++) {
-        text += base + "\n\n";
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Lorem Ipsum Logic
+    const loremAmount = document.getElementById('loremAmount');
+    const loremOutput = document.getElementById('loremOutput');
+    const loremStatus = document.getElementById('loremStatus');
+
+    const typeParagraphs = document.getElementById('loremTypeParagraphs');
+    const typeSentences = document.getElementById('loremTypeSentences');
+    const typeWords = document.getElementById('loremTypeWords');
+
+    const generateBtn = document.getElementById('generateLoremBtn');
+    const copyBtn = document.getElementById('copyLoremBtn');
+
+    function setLoremStatus(text, ok = true) {
+      loremStatus.textContent = text;
+      loremStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    // Basic lorem source
+    const loremSource = `
+      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+      Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
+      Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum
+    `.trim().split(/\s+/);
+
+    function generateLorem() {
+      const amount = Math.max(1, Math.min(20, parseInt(loremAmount.value, 10) || 1));
+
+      if (typeWords.checked) {
+        const words = [];
+        for (let i = 0; i < amount; i++) {
+          words.push(loremSource[i % loremSource.length]);
+        }
+        return words.join(" ");
       }
 
-      document.getElementById("output").value = text.trim();
-    };
+      if (typeSentences.checked) {
+        const sentences = [];
+        for (let i = 0; i < amount; i++) {
+          const slice = loremSource.slice(0, 12).join(" ");
+          sentences.push(slice.charAt(0).toUpperCase() + slice.slice(1) + ".");
+        }
+        return sentences.join(" ");
+      }
 
-    document.getElementById("generate").click();
+      // Paragraphs
+      const paragraphs = [];
+      for (let i = 0; i < amount; i++) {
+        const slice = loremSource.slice(0, 50).join(" ");
+        paragraphs.push(slice.charAt(0).toUpperCase() + slice.slice(1) + ".");
+      }
+      return paragraphs.join("\n\n");
+    }
+
+    generateBtn.addEventListener('click', () => {
+      loremOutput.value = generateLorem();
+      setLoremStatus('Lorem Ipsum generated.', true);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!loremOutput.value.trim()) {
+        setLoremStatus('Nothing to copy.', false);
+        return;
+      }
+      await navigator.clipboard.writeText(loremOutput.value);
+      setLoremStatus('Copied to clipboard.', true);
+    });
   </script>
+
 </body>
 </html>
