@@ -2,57 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Tools for All — Beautiful, Free Utilities</title>
+  <title>Tools for All — Premium Utility Suite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <!-- Background orbs -->
+
+  <!-- Floating Orbs -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <!-- Top bar -->
+  <!-- Top Navigation -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="logo">
         <div class="logo-mark">T</div>
         <span class="logo-text">Tools for All</span>
       </div>
+
       <nav class="nav-links">
         <a href="#text-tools">Text</a>
         <a href="#dev-tools">Developer</a>
         <a href="#utility-tools">Utility</a>
         <a href="#finance-tools">Finance</a>
       </nav>
-      <button class="pill-btn pill-btn-ghost" id="modeToggle">🌙</button>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-inner">
+
       <div class="hero-copy">
-        <div class="hero-pill">Free, fast & beautifully crafted</div>
-        <h1>All your everyday tools, in one cinematic interface.</h1>
+        <div class="hero-pill">Premium. Fast. Free.</div>
+        <h1>The world’s cleanest collection of everyday tools.</h1>
         <p>
-          Word counters, JSON formatters, QR generators and more — designed like a premium SaaS,
-          but free forever.
+          A unified suite of beautifully crafted utilities — designed with cinematic visuals,
+          glassmorphism, and world‑class UX.
         </p>
+
         <div class="hero-actions">
           <button class="pill-btn pill-btn-primary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">
-            Explore tools
+            Explore Tools
           </button>
-          <button class="pill-btn pill-btn-ghost">
-            View most used
-          </button>
+          <button class="pill-btn pill-btn-ghost">Most Used</button>
         </div>
+
         <div class="hero-meta">
-          <span>⚡ Instant, no sign‑up</span>
-          <span>🎨 Unified design system</span>
-          <span>🧰 Built for devs & creators</span>
+          <span>⚡ Instant load</span>
+          <span>🎨 Premium UI</span>
+          <span>🧰 10+ tools</span>
         </div>
       </div>
+
       <div class="hero-panel">
         <div class="hero-panel-inner">
           <div class="hero-panel-header">
@@ -60,6 +66,7 @@
             <span class="dot dot-yellow"></span>
             <span class="dot dot-green"></span>
           </div>
+
           <div class="hero-panel-body">
             <div class="hero-stats">
               <div class="stat">
@@ -67,7 +74,7 @@
                 <span class="stat-value">10</span>
               </div>
               <div class="stat">
-                <span class="stat-label">Avg. time saved</span>
+                <span class="stat-label">Avg. Time Saved</span>
                 <span class="stat-value">3.4×</span>
               </div>
               <div class="stat">
@@ -75,6 +82,7 @@
                 <span class="stat-value" id="themeLabel">Dark</span>
               </div>
             </div>
+
             <div class="hero-preview">
               <div class="preview-card">
                 <span class="preview-label">JSON Formatter</span>
@@ -84,14 +92,17 @@
   "stack": ["Web", "AI", "Music"]
 }</pre>
               </div>
+
               <div class="preview-card preview-card-secondary">
                 <span class="preview-label">QR Code Generator</span>
                 <div class="preview-qr"></div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -101,144 +112,140 @@
       <div class="search-label">Find a tool</div>
       <div class="search-input-wrap">
         <span class="search-icon">⌕</span>
-        <input id="search" type="text" placeholder="Search by name or category…" />
+        <input id="search" type="text" placeholder="Search tools…" />
       </div>
     </div>
   </section>
 
   <!-- Tools -->
   <main id="tools" class="tools-section">
-    <!-- Text Tools -->
+
+    <!-- TEXT TOOLS -->
     <section class="tools-group" id="text-tools">
       <div class="tools-group-header">
         <h2>Text Tools</h2>
-        <p>Clean up, transform, and generate text with precision.</p>
+        <p>Transform, analyze, and generate text with precision.</p>
       </div>
+
       <div class="tools-grid">
-        <a class="tool-card" data-name="word counter text words characters" href="word-counter/">
+        <a class="tool-card" data-name="word counter" href="word-counter/">
           <div class="tool-icon tool-icon-purple">Aa</div>
           <div class="tool-body">
-            <h3>Word & Character Counter</h3>
-            <p>Instantly count words, characters, and spacing for any text.</p>
+            <h3>Word Counter</h3>
+            <p>Count words, characters, and spacing instantly.</p>
           </div>
-          <span class="tool-tag">Text</span>
         </a>
 
-        <a class="tool-card" data-name="case converter upper lower title sentence" href="case-converter/">
+        <a class="tool-card" data-name="case converter" href="case-converter/">
           <div class="tool-icon tool-icon-blue">⇧</div>
           <div class="tool-body">
             <h3>Case Converter</h3>
-            <p>Switch between UPPERCASE, lowercase, Title Case, and more.</p>
+            <p>Switch between uppercase, lowercase, title case, and more.</p>
           </div>
-          <span class="tool-tag">Text</span>
         </a>
 
-        <a class="tool-card" data-name="lorem ipsum generator dummy text" href="lorem-ipsum/">
+        <a class="tool-card" data-name="lorem ipsum" href="lorem-ipsum/">
           <div class="tool-icon tool-icon-pink">Li</div>
           <div class="tool-body">
-            <h3>Lorem Ipsum Generator</h3>
-            <p>Generate beautiful placeholder paragraphs in one click.</p>
+            <h3>Lorem Ipsum</h3>
+            <p>Generate clean placeholder paragraphs.</p>
           </div>
-          <span class="tool-tag">Text</span>
         </a>
       </div>
     </section>
 
-    <!-- Developer Tools -->
+    <!-- DEVELOPER TOOLS -->
     <section class="tools-group" id="dev-tools">
       <div class="tools-group-header">
         <h2>Developer Tools</h2>
         <p>Utilities that feel like part of your dev environment.</p>
       </div>
+
       <div class="tools-grid">
-        <a class="tool-card" data-name="json formatter beautify minify" href="json-formatter/">
+        <a class="tool-card" data-name="json formatter" href="json-formatter/">
           <div class="tool-icon tool-icon-green">{ }</div>
           <div class="tool-body">
             <h3>JSON Formatter</h3>
-            <p>Pretty‑print or minify JSON with instant validation.</p>
+            <p>Pretty‑print or minify JSON instantly.</p>
           </div>
-          <span class="tool-tag">Dev</span>
         </a>
 
-        <a class="tool-card" data-name="markdown html converter" href="markdown-to-html/">
+        <a class="tool-card" data-name="markdown html" href="markdown-to-html/">
           <div class="tool-icon tool-icon-orange">MD</div>
           <div class="tool-body">
             <h3>Markdown ↔ HTML</h3>
-            <p>Convert between Markdown and HTML without losing structure.</p>
+            <p>Convert between Markdown and HTML.</p>
           </div>
-          <span class="tool-tag">Dev</span>
         </a>
 
-        <a class="tool-card" data-name="px rem converter css" href="px-to-rem/">
+        <a class="tool-card" data-name="px rem" href="px-to-rem/">
           <div class="tool-icon tool-icon-cyan">px</div>
           <div class="tool-body">
-            <h3>PX ↔ REM Converter</h3>
-            <p>Scale typography and spacing with a responsive mindset.</p>
+            <h3>PX ↔ REM</h3>
+            <p>Scale typography responsively.</p>
           </div>
-          <span class="tool-tag">Dev</span>
         </a>
       </div>
     </section>
 
-    <!-- Utility Tools -->
+    <!-- UTILITY TOOLS -->
     <section class="tools-group" id="utility-tools">
       <div class="tools-group-header">
         <h2>Utility Tools</h2>
-        <p>Everyday helpers that feel anything but basic.</p>
+        <p>Everyday helpers with premium polish.</p>
       </div>
+
       <div class="tools-grid">
-        <a class="tool-card" data-name="qr code generator" href="qr-code-generator/">
+        <a class="tool-card" data-name="qr code" href="qr-code-generator/">
           <div class="tool-icon tool-icon-yellow">QR</div>
           <div class="tool-body">
-            <h3>QR Code Generator</h3>
-            <p>Create crisp QR codes for links, text, and more.</p>
+            <h3>QR Generator</h3>
+            <p>Create crisp QR codes instantly.</p>
           </div>
-          <span class="tool-tag">Utility</span>
         </a>
 
-        <a class="tool-card" data-name="password generator secure random" href="password-generator/">
+        <a class="tool-card" data-name="password generator" href="password-generator/">
           <div class="tool-icon tool-icon-red">🔒</div>
           <div class="tool-body">
             <h3>Password Generator</h3>
-            <p>Generate strong, customizable passwords in seconds.</p>
+            <p>Generate secure, customizable passwords.</p>
           </div>
-          <span class="tool-tag">Utility</span>
         </a>
       </div>
     </section>
 
-    <!-- Finance Tools -->
+    <!-- FINANCE TOOLS -->
     <section class="tools-group" id="finance-tools">
       <div class="tools-group-header">
         <h2>Finance Tools</h2>
-        <p>Simple, sharp tools for invoices and returns.</p>
+        <p>Simple, sharp tools for money and metrics.</p>
       </div>
+
       <div class="tools-grid">
-        <a class="tool-card" data-name="invoice generator billing" href="invoice-generator/">
+        <a class="tool-card" data-name="invoice generator" href="invoice-generator/">
           <div class="tool-icon tool-icon-gold">$</div>
           <div class="tool-body">
             <h3>Invoice Generator</h3>
-            <p>Create clean invoices and export via browser print‑to‑PDF.</p>
+            <p>Create clean invoices and export to PDF.</p>
           </div>
-          <span class="tool-tag">Finance</span>
         </a>
 
-        <a class="tool-card" data-name="roi calculator return on investment" href="roi-calculator/">
+        <a class="tool-card" data-name="roi calculator" href="roi-calculator/">
           <div class="tool-icon tool-icon-lime">ROI</div>
           <div class="tool-body">
             <h3>ROI Calculator</h3>
-            <p>Quickly calculate return on investment for any project.</p>
+            <p>Calculate return on investment instantly.</p>
           </div>
-          <span class="tool-tag">Finance</span>
         </a>
       </div>
     </section>
+
   </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <span>© 2026 Tools for All — Designed for people who care about details.</span>
+      <span>© 2026 Tools for All — Designed with love.</span>
       <span>Built by Kevin Manzi</span>
     </div>
   </footer>
@@ -281,5 +288,6 @@
       });
     });
   </script>
+
 </body>
 </html>
