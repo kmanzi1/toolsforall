@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lorem Ipsum Generator - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    label { display:block; margin-top:8px; }
+    input { width:80px; padding:4px; }
+    button { margin-top:10px; padding:8px 14px; }
+    textarea { width:100%; height:200px; margin-top:10px; padding:10px; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>Lorem Ipsum Generator</h1>
 
+  <label>Paragraphs:
+    <input type="number" id="count" value="3" min="1" max="20">
+  </label>
+  <button id="generate">Generate</button>
+
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    const base = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.";
+    const count = document.getElementById('count');
+    const output = document.getElementById('output');
+    const btn = document.getElementById('generate');
+
+    btn.addEventListener('click', () => {
+      const n = parseInt(count.value, 10) || 1;
+      const paras = [];
+      for (let i = 0; i < n; i++) paras.push(base);
+      output.value = paras.join("\n\n");
+    });
+
+    btn.click();
+  </script>
+</body>
+</html>
