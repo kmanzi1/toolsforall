@@ -4,17 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tools for All</title>
+
   <style>
+    /* GLOBAL STYLES */
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
-      color: #fff;
       margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      animation: fadeIn 1.5s ease-in;
+      padding: 0;
+      background: #f5f7fa;
+      color: #1a1a1a;
+    }
+
+    /* HERO SECTION */
+    header {
+      text-align: center;
+      padding: 100px 20px 80px;
+      background: linear-gradient(120deg, #007bff, #00ffcc, #007bff);
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease infinite;
+      color: #fff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 3.2em;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-out;
+    }
+
+    header p {
+      font-size: 1.2em;
+      opacity: 0.9;
+      animation: fadeIn 3s ease-out;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 25px;
+      background: #fff;
+      color: #007bff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      animation: fadeIn 4s ease-out;
+    }
+
+    .cta:hover {
+      background: #e9f1f7;
+      color: #0056b3;
+      transform: translateY(-3px);
     }
 
     @keyframes fadeIn {
@@ -22,73 +69,99 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h1 {
-      margin-top: 80px;
-      font-size: 3.2em;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #00bfff, #00ffcc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowPulse 3s ease-in-out infinite alternate;
+    /* MAIN CONTENT */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 50px 20px;
     }
 
-    @keyframes glowPulse {
-      0% { text-shadow: 0 0 10px #00bfff; }
-      100% { text-shadow: 0 0 25px #00ffcc; }
+    h2 {
+      font-size: 1.7em;
+      color: #0a2540;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 8px;
+      margin-top: 50px;
+      margin-bottom: 20px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      padding: 50px;
-      width: 90%;
-      max-width: 1000px;
-      animation: fadeIn 2s ease-in;
+    .tool-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 25px;
+    .tool-row a {
+      flex: 1 1 240px;
+      background: #fff;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      padding: 18px;
       text-align: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 0 rgba(0, 191, 255, 0);
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    a {
-      color: #00bfff;
+      color: #007bff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.1em;
+      transition: 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
-    a:hover {
-      color: #00ffcc;
+    .tool-row a:hover {
+      background: #f0f7ff;
+      border-color: #007bff;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 40px;
     }
   </style>
 </head>
+
 <body>
-  <h1>Tools for All</h1>
-  <div class="grid">
-    <div class="card"><a href="word-counter/">Word & Character Counter</a></div>
-    <div class="card"><a href="px-to-rem/">PX ↔ REM Converter</a></div>
-    <div class="card"><a href="json-formatter/">JSON Formatter</a></div>
-    <div class="card"><a href="case-converter/">Case Converter</a></div>
-    <div class="card"><a href="invoice-generator/">Invoice Generator</a></div>
-    <div class="card"><a href="markdown-to-html/">Markdown ↔ HTML Converter</a></div>
-    <div class="card"><a href="qr-code-generator/">QR Code Generator</a></div>
-    <div class="card"><a href="password-generator/">Password Generator</a></div>
-    <div class="card"><a href="lorem-ipsum/">Lorem Ipsum Generator</a></div>
-    <div class="card"><a href="roi-calculator/">ROI Calculator</a></div>
-  </div>
+
+  <!-- HERO SECTION -->
+  <header>
+    <h1>Tools for All</h1>
+    <p>Free, ad‑free tools for developers, creators, and everyday users.</p>
+    <a href="#tools" class="cta">Explore Tools</a>
+  </header>
+
+  <!-- TOOL SECTIONS -->
+  <section id="tools">
+
+    <h2>Text Tools</h2>
+    <div class="tool-row">
+      <a href="word-counter/">Word & Character Counter</a>
+      <a href="case-converter/">Case Converter</a>
+      <a href="lorem-ipsum/">Lorem Ipsum Generator</a>
+    </div>
+
+    <h2>Developer Tools</h2>
+    <div class="tool-row">
+      <a href="json-formatter/">JSON Formatter</a>
+      <a href="markdown-to-html/">Markdown ↔ HTML Converter</a>
+      <a href="px-to-rem/">PX ↔ REM Converter</a>
+    </div>
+
+    <h2>Design & Marketing Tools</h2>
+    <div class="tool-row">
+      <a href="qr-code-generator/">QR Code Generator</a>
+      <a href="invoice-generator/">Invoice Generator</a>
+      <a href="roi-calculator/">ROI Calculator</a>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Tools for All — Built by Kevin Manzi
+  </footer>
+
 </body>
 </html>
