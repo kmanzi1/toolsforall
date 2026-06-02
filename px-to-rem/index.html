@@ -2,54 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PX ↔ REM Converter - Tools for All</title>
-  <style>
-    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
-    h1 { color:#0a2540; }
-    label { display:block; margin-top:10px; }
-    input { padding:6px; width:150px; }
-    a { color:#007bff; text-decoration:none; }
-  </style>
+  <title>PX ↔ REM Converter</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>PX ↔ REM Converter</h1>
+  <div class="tool-page">
+    <div class="tool-header">
+      <a class="back-link" href="../">← Back</a>
+      <h1>PX ↔ REM Converter</h1>
+    </div>
 
-  <label>Base font size (px):
-    <input type="number" id="base" value="16">
-  </label>
+    <label>Base font size (px)</label>
+    <input id="base" type="number" value="16">
 
-  <label>Pixels (px):
-    <input type="number" id="px">
-  </label>
+    <label>Pixels (px)</label>
+    <input id="px" type="number">
 
-  <label>REM:
-    <input type="number" id="rem" step="0.01">
-  </label>
+    <label>REM</label>
+    <input id="rem" type="number" step="0.01">
+  </div>
 
   <script>
-    const base = document.getElementById('base');
-    const px = document.getElementById('px');
-    const rem = document.getElementById('rem');
+    const base = document.getElementById("base");
+    const px = document.getElementById("px");
+    const rem = document.getElementById("rem");
 
-    function updateFromPx() {
-      const b = parseFloat(base.value) || 16;
-      const p = parseFloat(px.value);
-      if (!isNaN(p)) rem.value = (p / b).toFixed(3);
-    }
-
-    function updateFromRem() {
-      const b = parseFloat(base.value) || 16;
-      const r = parseFloat(rem.value);
-      if (!isNaN(r)) px.value = (r * b).toFixed(1);
-    }
-
-    px.addEventListener('input', updateFromPx);
-    rem.addEventListener('input', updateFromRem);
-    base.addEventListener('input', () => {
-      if (px.value) updateFromPx();
-      if (rem.value) updateFromRem();
-    });
+    px.oninput = () => rem.value = (px.value / base.value).toFixed(3);
+    rem.oninput = () => px.value = (rem.value * base.value).toFixed(1);
+    base.oninput = () => {
+      if (px.value) rem.value = (px.value / base.value).toFixed(3);
+      if (rem.value) px.value = (rem.value * base.value).toFixed(1);
+    };
   </script>
 </body>
 </html>
