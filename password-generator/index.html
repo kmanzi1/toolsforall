@@ -2,67 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Password Generator - Tools for All</title>
-  <style>
-    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
-    h1 { color:#0a2540; }
-    label { display:block; margin-top:8px; }
-    input[type="number"] { width:80px; padding:4px; }
-    button { margin-top:10px; padding:8px 14px; }
-    #output { margin-top:15px; font-family: monospace; font-size:1.1em; }
-    a { color:#007bff; text-decoration:none; }
-  </style>
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>Password Generator</h1>
+  <div class="tool-page">
+    <div class="tool-header">
+      <a class="back-link" href="../">← Back</a>
+      <h1>Password Generator</h1>
+    </div>
 
-  <label>Length:
-    <input type="number" id="length" value="16" min="4" max="64">
-  </label>
-  <label><input type="checkbox" id="lower" checked> Lowercase</label>
-  <label><input type="checkbox" id="upper" checked> Uppercase</label>
-  <label><input type="checkbox" id="numbers" checked> Numbers</label>
-  <label><input type="checkbox" id="symbols" checked> Symbols</label>
+    <label>Password Length</label>
+    <input id="length" type="number" value="16" min="4" max="64">
 
-  <button id="generate">Generate</button>
+    <label><input type="checkbox" id="lower" checked> Lowercase</label>
+    <label><input type="checkbox" id="upper" checked> Uppercase</label>
+    <label><input type="checkbox" id="numbers" checked> Numbers</label>
+    <label><input type="checkbox" id="symbols" checked> Symbols</label>
 
-  <div id="output"></div>
+    <button id="generate" style="margin-top:15px;">Generate Password</button>
+
+    <textarea id="output" rows="3" readonly style="margin-top:15px;"></textarea>
+  </div>
 
   <script>
-    const length = document.getElementById('length');
-    const lower = document.getElementById('lower');
-    const upper = document.getElementById('upper');
-    const numbers = document.getElementById('numbers');
-    const symbols = document.getElementById('symbols');
-    const output = document.getElementById('output');
-    const btn = document.getElementById('generate');
-
     const sets = {
-      lower: 'abcdefghijklmnopqrstuvwxyz',
-      upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      numbers: '0123456789',
-      symbols: '!@#$%^&*()-_=+[]{};:,.<>/?'
+      lower: "abcdefghijklmnopqrstuvwxyz",
+      upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      numbers: "0123456789",
+      symbols: "!@#$%^&*()-_=+[]{};:,.<>/?"
     };
 
-    btn.addEventListener('click', () => {
-      let chars = '';
-      if (lower.checked) chars += sets.lower;
-      if (upper.checked) chars += sets.upper;
-      if (numbers.checked) chars += sets.numbers;
-      if (symbols.checked) chars += sets.symbols;
-      const len = parseInt(length.value, 10) || 16;
+    document.getElementById("generate").onclick = () => {
+      const length = parseInt(document.getElementById("length").value);
+      let chars = "";
+
+      if (document.getElementById("lower").checked) chars += sets.lower;
+      if (document.getElementById("upper").checked) chars += sets.upper;
+      if (document.getElementById("numbers").checked) chars += sets.numbers;
+      if (document.getElementById("symbols").checked) chars += sets.symbols;
+
       if (!chars) {
-        output.textContent = 'Select at least one character set.';
+        document.getElementById("output").value = "Select at least one character set.";
         return;
       }
-      let pass = '';
-      for (let i = 0; i < len; i++) {
+
+      let pass = "";
+      for (let i = 0; i < length; i++) {
         pass += chars[Math.floor(Math.random() * chars.length)];
       }
-      output.textContent = pass;
-    });
+
+      document.getElementById("output").value = pass;
+    };
   </script>
 </body>
 </html>
-
