@@ -5,7 +5,23 @@
   <title>Tools for All</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+  <!-- DARK/LIGHT TOGGLE -->
+  <div class="mode-toggle" id="modeToggle">🌙 Dark Mode</div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h3>Navigation</h3>
+    <a href="#tools">All Tools</a>
+    <a href="#text-tools">Text Tools</a>
+    <a href="#dev-tools">Developer Tools</a>
+    <a href="#design-tools">Design & Utility</a>
+    <a href="#finance-tools">Finance Tools</a>
+  </div>
+
+  <!-- HERO -->
   <header class="hero">
     <div class="container">
       <h1>Tools for All</h1>
@@ -14,24 +30,169 @@
     </div>
   </header>
 
+  <!-- SEARCH -->
+  <div class="search-box">
+    <input id="search" type="text" placeholder="Search tools...">
+  </div>
+
+  <!-- TOOLS -->
   <main class="container" id="tools">
-    <h2 class="section-title">All Tools</h2>
+
+    <!-- TEXT TOOLS -->
+    <h2 id="text-tools" class="category-title">Text Tools</h2>
     <div class="tools-grid">
-      <div class="tool-card"><a href="word-counter/">Word & Character Counter</a></div>
-      <div class="tool-card"><a href="px-to-rem/">PX ↔ REM Converter</a></div>
-      <div class="tool-card"><a href="json-formatter/">JSON Formatter</a></div>
-      <div class="tool-card"><a href="case-converter/">Case Converter</a></div>
-      <div class="tool-card"><a href="invoice-generator/">Invoice Generator</a></div>
-      <div class="tool-card"><a href="markdown-to-html/">Markdown ↔ HTML Converter</a></div>
-      <div class="tool-card"><a href="qr-code-generator/">QR Code Generator</a></div>
-      <div class="tool-card"><a href="password-generator/">Password Generator</a></div>
-      <div class="tool-card"><a href="lorem-ipsum/">Lorem Ipsum Generator</a></div>
-      <div class="tool-card"><a href="roi-calculator/">ROI Calculator</a></div>
+      <div class="tool-card" data-name="word counter text words characters">
+        <a href="word-counter/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/type.svg" alt="">
+          Word & Character Counter
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="case converter text upper lower title sentence">
+        <a href="case-converter/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/text-cursor-input.svg" alt="">
+          Case Converter
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="lorem ipsum dummy text generator">
+        <a href="lorem-ipsum/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/file-text.svg" alt="">
+          Lorem Ipsum Generator
+        </a>
+      </div>
     </div>
+
+    <!-- DEVELOPER TOOLS -->
+    <h2 id="dev-tools" class="category-title">Developer Tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card" data-name="json formatter beautify minify">
+        <a href="json-formatter/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/code.svg" alt="">
+          JSON Formatter
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="markdown html converter">
+        <a href="markdown-to-html/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/file-code.svg" alt="">
+          Markdown ↔ HTML Converter
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="px rem converter css">
+        <a href="px-to-rem/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/ruler.svg" alt="">
+          PX ↔ REM Converter
+        </a>
+      </div>
+    </div>
+
+    <!-- DESIGN & UTILITY -->
+    <h2 id="design-tools" class="category-title">Design & Utility Tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card" data-name="qr code generator">
+        <a href="qr-code-generator/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/qr-code.svg" alt="">
+          QR Code Generator
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="password generator secure random">
+        <a href="password-generator/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/lock.svg" alt="">
+          Password Generator
+        </a>
+      </div>
+    </div>
+
+    <!-- FINANCE TOOLS -->
+    <h2 id="finance-tools" class="category-title">Finance Tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card" data-name="invoice generator billing">
+        <a href="invoice-generator/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/receipt.svg" alt="">
+          Invoice Generator
+        </a>
+      </div>
+
+      <div class="tool-card" data-name="roi calculator return on investment">
+        <a href="roi-calculator/">
+          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/piggy-bank.svg" alt="">
+          ROI Calculator
+        </a>
+      </div>
+    </div>
+
   </main>
 
-  <footer class="container" style="text-align:center; font-size:0.85rem; color:#9ca3af;">
+  <footer class="container" style="text-align:center; color:#9ca3af;">
     © 2026 Tools for All — Built by Kevin Manzi
   </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // MODE TOGGLE
+    const toggle = document.getElementById("modeToggle");
+    if (localStorage.getItem("mode") === "light") {
+      document.body.classList.add("light");
+      toggle.textContent = "🌚 Light Mode";
+    }
+    toggle.onclick = () => {
+      document.body.classList.toggle("light");
+      if (document.body.classList.contains("light")) {
+        toggle.textContent = "🌚 Light Mode";
+        localStorage.setItem("mode", "light");
+      } else {
+        toggle.textContent = "🌙 Dark Mode";
+        localStorage.setItem("mode", "dark");
+      }
+    };
+
+    // SEARCH
+    const search = document.getElementById("search");
+    const cards = document.querySelectorAll(".tool-card");
+    search.addEventListener("input", () => {
+      const q = search.value.toLowerCase();
+      cards.forEach(card => {
+        const name = card.dataset.name;
+        card.style.display = name.includes(q) ? "block" : "none";
+      });
+    });
+
+    // LOCAL ANALYTICS
+    document.querySelectorAll(".tool-card a").forEach(link => {
+      link.addEventListener("click", () => {
+        const tool = link.textContent.trim();
+        let stats = JSON.parse(localStorage.getItem("toolStats") || "{}");
+        stats[tool] = (stats[tool] || 0) + 1;
+        localStorage.setItem("toolStats", JSON.stringify(stats));
+      });
+    });
+
+    function showStats() {
+      const stats = JSON.parse(localStorage.getItem("toolStats") || "{}");
+      const sorted = Object.entries(stats).sort((a,b) => b[1] - a[1]);
+      if (sorted.length === 0) return;
+
+      const container = document.createElement("div");
+      container.className = "container";
+      container.innerHTML = `
+        <h2 class="category-title">Most Used Tools</h2>
+        <div class="tools-grid" id="statsGrid"></div>
+      `;
+      document.body.insertBefore(container, document.querySelector("footer"));
+
+      const grid = document.getElementById("statsGrid");
+      sorted.slice(0, 4).forEach(([name]) => {
+        const card = [...document.querySelectorAll(".tool-card")]
+          .find(c => c.innerText.includes(name));
+        if (card) grid.appendChild(card.cloneNode(true));
+      });
+    }
+
+    showStats();
+  </script>
+
 </body>
 </html>
