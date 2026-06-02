@@ -2,38 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Word & Character Counter - Tools for All</title>
-  <style>
-    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
-    h1 { color:#0a2540; }
-    textarea { width:100%; height:200px; padding:10px; font-size:1em; }
-    .stats { margin-top:15px; font-size:1.05em; }
-    a { color:#007bff; text-decoration:none; }
-  </style>
+  <title>Word Counter - Tools for All</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>Word & Character Counter</h1>
-  <textarea id="text" placeholder="Start typing or paste your text here..."></textarea>
-  <div class="stats">
-    Words: <span id="words">0</span> |
-    Characters: <span id="chars">0</span> |
-    Characters (no spaces): <span id="charsNoSpaces">0</span>
+  <div class="tool-page">
+    <div class="tool-header">
+      <a class="back-link" href="../">← Back</a>
+      <h1>Word & Character Counter</h1>
+    </div>
+
+    <textarea id="text" rows="10" placeholder="Start typing..."></textarea>
+
+    <p style="margin-top:15px;">
+      Words: <span id="words">0</span> ·
+      Characters: <span id="chars">0</span> ·
+      No spaces: <span id="charsNoSpaces">0</span>
+    </p>
   </div>
 
   <script>
-    const text = document.getElementById('text');
-    const words = document.getElementById('words');
-    const chars = document.getElementById('chars');
-    const charsNoSpaces = document.getElementById('charsNoSpaces');
+    const t = document.getElementById("text");
+    const w = document.getElementById("words");
+    const c = document.getElementById("chars");
+    const ns = document.getElementById("charsNoSpaces");
 
-    text.addEventListener('input', () => {
-      const value = text.value;
-      const trimmed = value.trim();
-      const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
-      words.textContent = wordCount;
-      chars.textContent = value.length;
-      charsNoSpaces.textContent = value.replace(/\s/g, '').length;
+    t.addEventListener("input", () => {
+      const v = t.value;
+      w.textContent = v.trim() ? v.trim().split(/\s+/).length : 0;
+      c.textContent = v.length;
+      ns.textContent = v.replace(/\s/g, "").length;
     });
   </script>
 </body>
