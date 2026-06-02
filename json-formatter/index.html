@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Formatter - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    textarea { width:100%; height:200px; padding:10px; font-family: monospace; }
+    button { margin-top:10px; padding:8px 16px; }
+    .error { color:red; margin-top:10px; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>JSON Formatter</h1>
+  <textarea id="input" placeholder='Paste JSON here...'></textarea>
+  <button id="format">Format</button>
+  <button id="minify">Minify</button>
+  <div class="error" id="error"></div>
+
+  <script>
+    const input = document.getElementById('input');
+    const formatBtn = document.getElementById('format');
+    const minifyBtn = document.getElementById('minify');
+    const error = document.getElementById('error');
+
+    function handle(action) {
+      error.textContent = '';
+      try {
+        const parsed = JSON.parse(input.value);
+        input.value = action === 'format'
+          ? JSON.stringify(parsed, null, 2)
+          : JSON.stringify(parsed);
+      } catch (e) {
+        error.textContent = 'Invalid JSON: ' + e.message;
+      }
+    }
+
+    formatBtn.addEventListener('click', () => handle('format'));
+    minifyBtn.addEventListener('click', () => handle('minify'));
+  </script>
+</body>
+</html>
 
