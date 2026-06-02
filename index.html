@@ -1,77 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tools for All</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Tools for All — Beautiful, Free Utilities</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <!-- Background orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-  <!-- DARK/LIGHT TOGGLE -->
-  <div class="mode-toggle" id="modeToggle">🌙 Dark Mode</div>
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h3>Navigation</h3>
-    <a href="#tools">All Tools</a>
-    <a href="#text-tools">Text Tools</a>
-    <a href="#dev-tools">Developer Tools</a>
-    <a href="#design-tools">Design & Utility</a>
-    <a href="#finance-tools">Finance Tools</a>
-  </div>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container">
-      <h1>Tools for All</h1>
-      <p>Free, ad‑free tools for developers, creators, and everyday users.</p>
-      <button class="btn-primary" onclick="location.href='#tools'">Explore Tools</button>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#text-tools">Text</a>
+        <a href="#dev-tools">Developer</a>
+        <a href="#utility-tools">Utility</a>
+        <a href="#finance-tools">Finance</a>
+      </nav>
+      <button class="pill-btn pill-btn-ghost" id="modeToggle">🌙</button>
     </div>
   </header>
 
-  <!-- SEARCH -->
-  <div class="search-box">
-    <input id="search" type="text" placeholder="Search tools...">
-  </div>
-
-  <!-- TOOLS -->
-  <main class="container" id="tools">
-
-    <h2 id="text-tools" class="category-title">Text Tools</h2>
-    <div class="tools-grid">
-      <div class="tool-card" data-name="word counter">
-        <a href="word-counter/">
-          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/type.svg">
-          Word & Character Counter
-        </a>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-pill">Free, fast & beautifully crafted</div>
+        <h1>All your everyday tools, in one cinematic interface.</h1>
+        <p>
+          Word counters, JSON formatters, QR generators and more — designed like a premium SaaS,
+          but free forever.
+        </p>
+        <div class="hero-actions">
+          <button class="pill-btn pill-btn-primary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">
+            Explore tools
+          </button>
+          <button class="pill-btn pill-btn-ghost">
+            View most used
+          </button>
+        </div>
+        <div class="hero-meta">
+          <span>⚡ Instant, no sign‑up</span>
+          <span>🎨 Unified design system</span>
+          <span>🧰 Built for devs & creators</span>
+        </div>
       </div>
-      <div class="tool-card" data-name="case converter">
-        <a href="case-converter/">
-          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/text-cursor-input.svg">
-          Case Converter
-        </a>
-      </div>
-      <div class="tool-card" data-name="lorem ipsum">
-        <a href="lorem-ipsum/">
-          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/file-text.svg">
-          Lorem Ipsum Generator
-        </a>
+      <div class="hero-panel">
+        <div class="hero-panel-inner">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="hero-panel-body">
+            <div class="hero-stats">
+              <div class="stat">
+                <span class="stat-label">Tools</span>
+                <span class="stat-value">10</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Avg. time saved</span>
+                <span class="stat-value">3.4×</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Theme</span>
+                <span class="stat-value" id="themeLabel">Dark</span>
+              </div>
+            </div>
+            <div class="hero-preview">
+              <div class="preview-card">
+                <span class="preview-label">JSON Formatter</span>
+                <pre>{
+  "name": "Kevin",
+  "role": "Creator",
+  "stack": ["Web", "AI", "Music"]
+}</pre>
+              </div>
+              <div class="preview-card preview-card-secondary">
+                <span class="preview-label">QR Code Generator</span>
+                <div class="preview-qr"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <h2 id="dev-tools" class="category-title">Developer Tools</h2>
-    <div class="tools-grid">
-      <div class="tool-card" data-name="json formatter">
-        <a href="json-formatter/">
-          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/code.svg">
-          JSON Formatter
+  <!-- Search -->
+  <section class="search-section">
+    <div class="search-inner">
+      <div class="search-label">Find a tool</div>
+      <div class="search-input-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="search" type="text" placeholder="Search by name or category…" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <main id="tools" class="tools-section">
+    <!-- Text Tools -->
+    <section class="tools-group" id="text-tools">
+      <div class="tools-group-header">
+        <h2>Text Tools</h2>
+        <p>Clean up, transform, and generate text with precision.</p>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card" data-name="word counter text words characters" href="word-counter/">
+          <div class="tool-icon tool-icon-purple">Aa</div>
+          <div class="tool-body">
+            <h3>Word & Character Counter</h3>
+            <p>Instantly count words, characters, and spacing for any text.</p>
+          </div>
+          <span class="tool-tag">Text</span>
+        </a>
+
+        <a class="tool-card" data-name="case converter upper lower title sentence" href="case-converter/">
+          <div class="tool-icon tool-icon-blue">⇧</div>
+          <div class="tool-body">
+            <h3>Case Converter</h3>
+            <p>Switch between UPPERCASE, lowercase, Title Case, and more.</p>
+          </div>
+          <span class="tool-tag">Text</span>
+        </a>
+
+        <a class="tool-card" data-name="lorem ipsum generator dummy text" href="lorem-ipsum/">
+          <div class="tool-icon tool-icon-pink">Li</div>
+          <div class="tool-body">
+            <h3>Lorem Ipsum Generator</h3>
+            <p>Generate beautiful placeholder paragraphs in one click.</p>
+          </div>
+          <span class="tool-tag">Text</span>
         </a>
       </div>
-      <div class="tool-card" data-name="markdown html converter">
-        <a href="markdown-to-html/">
-          <img class="tool-icon" src="https://cdn.jsdelivr.net/npm/lucide-static/icons/file-code.svg">
-          Markdown ↔ HTML Converter
+    </section>
+
+    <!-- Developer Tools -->
+    <section class="tools-group" id="dev-tools">
+      <div class="tools-group-header">
+        <h2>Developer Tools</h2>
+        <p>Utilities that feel like part of your dev environment.</p>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card" data-name="json formatter beautify minify" href="json-formatter/">
+          <div class="tool-icon tool-icon-green">{ }</div>
+          <div class="tool-body">
+            <h3>JSON Formatter</h3>
+            <p>Pretty‑print or minify JSON with instant validation.</p>
+          </div>
+          <span class="tool-tag">Dev</span>
+        </a>
+
+        <a class="tool-card" data-name="markdown html converter" href="markdown-to-html/">
+          <div class="tool-icon tool-icon-orange">MD</div>
+          <div class="tool-body">
+            <h3>Markdown ↔ HTML</h3>
+            <p>Convert between Markdown and HTML without losing structure.</p>
+          </div>
+          <span class="tool-tag">Dev</span>
+        </a>
+
+        <a class="tool-card" data-name="px rem converter css" href="px-to-rem/">
+          <div class="tool-icon tool-icon-cyan">px</div>
+          <div class="tool-body">
+            <h3>PX ↔ REM Converter</h3>
+            <p>Scale typography and spacing with a responsive mindset.</p>
+          </div>
+          <span class="tool-tag">Dev</span>
         </a>
       </div>
-      <div class="tool-card" data-name="
+    </section>
+
+    <!-- Utility Tools -->
+    <section class="tools-group" id="utility-tools">
+      <div class="tools-group-header">
+        <h2>Utility Tools</h2>
+        <p>Everyday helpers that feel anything but basic.</p>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card" data-name="qr code generator" href="qr-code-generator/">
+          <div class="tool-icon tool-icon-yellow">QR</div>
+          <div class="tool-body">
+            <h3>QR Code Generator</h3>
+            <p>Create crisp QR codes for links, text, and more.</p>
+          </div>
+          <span class="tool-tag">Utility</span>
+        </a>
+
+        <a class="tool-card" data-name="password generator secure random" href="password-generator/">
+          <div class="tool-icon tool-icon-red">🔒</div>
+          <div class="tool-body">
+            <h3>Password Generator</h3>
+            <p>Generate strong, customizable passwords in seconds.</p>
+          </div>
+          <span class="tool-tag">Utility</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Finance Tools -->
+    <section class="tools-group" id="finance-tools">
+      <div class="tools-group-header">
+        <h2>Finance Tools</h2>
+        <p>Simple, sharp tools for invoices and returns.</p>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card" data-name="invoice generator billing" href="invoice-generator/">
+          <div class="tool-icon tool-icon-gold">$</div>
+          <div class="tool-body">
+            <h3>Invoice Generator</h3>
+            <p>Create clean invoices and export via browser print‑to‑PDF.</p>
+          </div>
+          <span class="tool-tag">Finance</span>
+        </a>
+
+        <a class="tool-card" data-name="roi calculator return on investment" href="roi-calculator/">
+          <div class="tool-icon tool-icon-lime">ROI</div>
+          <div class="tool-body">
+            <h3>ROI Calculator</h3>
+            <p>Quickly calculate return on investment for any project.</p>
+          </div>
+          <span class="tool-tag">Finance</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Designed for people who care about details.</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+        if (themeLabel) themeLabel.textContent = 'Light';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+        if (themeLabel) themeLabel.textContent = 'Dark';
+      }
+    }
+
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Search filter
+    const searchInput = document.getElementById('search');
+    const toolCards = document.querySelectorAll('.tool-card');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      toolCards.forEach(card => {
+        const name = card.dataset.name;
+        card.style.display = name.includes(q) ? 'flex' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
