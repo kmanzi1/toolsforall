@@ -2,42 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lorem Ipsum Generator - Tools for All</title>
-  <style>
-    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
-    h1 { color:#0a2540; }
-    label { display:block; margin-top:8px; }
-    input { width:80px; padding:4px; }
-    button { margin-top:10px; padding:8px 14px; }
-    textarea { width:100%; height:200px; margin-top:10px; padding:10px; }
-    a { color:#007bff; text-decoration:none; }
-  </style>
+  <title>Lorem Ipsum Generator</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>Lorem Ipsum Generator</h1>
+  <div class="tool-page">
+    <div class="tool-header">
+      <a class="back-link" href="../">← Back</a>
+      <h1>Lorem Ipsum Generator</h1>
+    </div>
 
-  <label>Paragraphs:
-    <input type="number" id="count" value="3" min="1" max="20">
-  </label>
-  <button id="generate">Generate</button>
+    <label>Number of Paragraphs</label>
+    <input id="count" type="number" value="3" min="1" max="20">
 
-  <textarea id="output" readonly></textarea>
+    <button id="generate" style="margin-top:15px;">Generate</button>
+
+    <textarea id="output" rows="10" readonly style="margin-top:15px;"></textarea>
+  </div>
 
   <script>
     const base = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.";
-    const count = document.getElementById('count');
-    const output = document.getElementById('output');
-    const btn = document.getElementById('generate');
 
-    btn.addEventListener('click', () => {
-      const n = parseInt(count.value, 10) || 1;
-      const paras = [];
-      for (let i = 0; i < n; i++) paras.push(base);
-      output.value = paras.join("\n\n");
-    });
+    document.getElementById("generate").onclick = () => {
+      const n = parseInt(document.getElementById("count").value);
+      let text = "";
 
-    btn.click();
+      for (let i = 0; i < n; i++) {
+        text += base + "\n\n";
+      }
+
+      document.getElementById("output").value = text.trim();
+    };
+
+    document.getElementById("generate").click();
   </script>
 </body>
 </html>
