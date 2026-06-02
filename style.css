@@ -646,3 +646,91 @@ body.light #modeToggle {
   }
 }
 
+
+/* HACKER-LAB TOOL HERO */
+.tool-hero-hacker {
+  padding: 50px 20px 20px;
+}
+.tool-hero-hacker .tool-hero-panel-inner.tool-hero-panel-hacker {
+  background: radial-gradient(circle at top left, rgba(34,197,94,0.22), rgba(15,23,42,0.96));
+  box-shadow: 0 24px 60px rgba(0,0,0,0.9);
+}
+.tool-hero-code-hacker pre {
+  background: #020617;
+  color: #bbf7d0;
+  text-shadow: 0 0 6px rgba(34,197,94,0.6);
+  border: 1px solid rgba(34,197,94,0.4);
+}
+.tool-hero-code-hacker pre::before {
+  content: "lab://session";
+  display: block;
+  font-size: 0.65rem;
+  color: #4ade80;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+.qr-preview-wrapper {
+  margin-top: 8px;
+  border-radius: 14px;
+  background: radial-gradient(circle at top left, rgba(34,197,94,0.12), rgba(15,23,42,0.95));
+  border: 1px solid rgba(34,197,94,0.4);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PASSWORD GRID */
+.password-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 16px;
+  margin-top: 12px;
+}
+.password-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.field-row input[type="number"] {
+  width: 80px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(148,163,184,0.5);
+  background: #020617;
+  color: var(--text-main);
+}
+.password-output {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.password-output input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(148,163,184,0.5);
+  background: #020617;
+  color: var(--text-main);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* RESPONSIVE HACKER-LAB */
+@media (max-width: 900px) {
+  .tool-hero-hacker .tool-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .password-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
