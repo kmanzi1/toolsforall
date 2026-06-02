@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Generator - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    label { display:block; margin-top:8px; }
+    input[type="number"] { width:80px; padding:4px; }
+    button { margin-top:10px; padding:8px 14px; }
+    #output { margin-top:15px; font-family: monospace; font-size:1.1em; }
+    a { color:#007bff; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>Password Generator</h1>
+
+  <label>Length:
+    <input type="number" id="length" value="16" min="4" max="64">
+  </label>
+  <label><input type="checkbox" id="lower" checked> Lowercase</label>
+  <label><input type="checkbox" id="upper" checked> Uppercase</label>
+  <label><input type="checkbox" id="numbers" checked> Numbers</label>
+  <label><input type="checkbox" id="symbols" checked> Symbols</label>
+
+  <button id="generate">Generate</button>
+
+  <div id="output"></div>
+
+  <script>
+    const length = document.getElementById('length');
+    const lower = document.getElementById('lower');
+    const upper = document.getElementById('upper');
+    const numbers = document.getElementById('numbers');
+    const symbols = document.getElementById('symbols');
+    const output = document.getElementById('output');
+    const btn = document.getElementById('generate');
+
+    const sets = {
+      lower: 'abcdefghijklmnopqrstuvwxyz',
+      upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      numbers: '0123456789',
+      symbols: '!@#$%^&*()-_=+[]{};:,.<>/?'
+    };
+
+    btn.addEventListener('click', () => {
+      let chars = '';
+      if (lower.checked) chars += sets.lower;
+      if (upper.checked) chars += sets.upper;
+      if (numbers.checked) chars += sets.numbers;
+      if (symbols.checked) chars += sets.symbols;
+      const len = parseInt(length.value, 10) || 16;
+      if (!chars) {
+        output.textContent = 'Select at least one character set.';
+        return;
+      }
+      let pass = '';
+      for (let i = 0; i < len; i++) {
+        pass += chars[Math.floor(Math.random() * chars.length)];
+      }
+      output.textContent = pass;
+    });
+  </script>
+</body>
+</html>
 
