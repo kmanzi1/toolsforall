@@ -2,47 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ROI Calculator - Tools for All</title>
-  <style>
-    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
-    h1 { color:#0a2540; }
-    label { display:block; margin-top:8px; }
-    input { width:150px; padding:6px; }
-    button { margin-top:10px; padding:8px 14px; }
-    #result { margin-top:15px; font-weight:bold; }
-    a { color:#007bff; text-decoration:none; }
-  </style>
+  <title>ROI Calculator</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-  <a href="../">← Back to Tools for All</a>
-  <h1>ROI Calculator</h1>
+  <div class="tool-page">
+    <div class="tool-header">
+      <a class="back-link" href="../">← Back</a>
+      <h1>ROI Calculator</h1>
+    </div>
 
-  <label>Initial Investment:
-    <input type="number" id="initial" placeholder="1000">
-  </label>
-  <label>Final Value:
-    <input type="number" id="final" placeholder="1500">
-  </label>
-  <button id="calc">Calculate ROI</button>
+    <label>Initial Investment ($)</label>
+    <input id="initial" type="number" placeholder="1000">
 
-  <div id="result"></div>
+    <label>Final Value ($)</label>
+    <input id="final" type="number" placeholder="1500">
+
+    <button id="calc" style="margin-top:15px;">Calculate ROI</button>
+
+    <p id="result" style="margin-top:20px; font-size:1.2rem;"></p>
+  </div>
 
   <script>
-    const initial = document.getElementById('initial');
-    const finalVal = document.getElementById('final');
-    const result = document.getElementById('result');
-    const btn = document.getElementById('calc');
+    document.getElementById("calc").onclick = () => {
+      const i = parseFloat(document.getElementById("initial").value);
+      const f = parseFloat(document.getElementById("final").value);
 
-    btn.addEventListener('click', () => {
-      const i = parseFloat(initial.value);
-      const f = parseFloat(finalVal.value);
       if (isNaN(i) || isNaN(f) || i === 0) {
-        result.textContent = 'Please enter valid numbers (initial cannot be 0).';
+        document.getElementById("result").textContent = "Enter valid numbers.";
         return;
       }
+
       const roi = ((f - i) / i) * 100;
-      result.textContent = 'ROI: ' + roi.toFixed(2) + '%';
-    });
+      document.getElementById("result").textContent = "ROI: " + roi.toFixed(2) + "%";
+    };
   </script>
 </body>
 </html>
