@@ -1,61 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Markdown ↔ HTML</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Markdown ↔ HTML Converter — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Markdown ↔ HTML Converter</h1>
-    </div>
 
-    <div style="display:flex; gap:20px; flex-wrap:wrap;">
-      <div style="flex:1;">
-        <h3>Markdown</h3>
-        <textarea id="md" rows="12"></textarea>
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
       </div>
 
-      <div style="flex:1;">
-        <h3>HTML</h3>
-        <textarea id="html" rows="12"></textarea>
-      </div>
-    </div>
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
 
-    <div style="margin-top:15px;">
-      <button id="toHtml">Markdown → HTML</button>
-      <button id="toMd">HTML → Markdown</button>
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
-  </div>
+  </header>
+
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
+
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Developer · Formatting</div>
+        <h1>Markdown ↔ HTML Converter</h1>
+        <p>
+          Convert Markdown to clean HTML or convert HTML back to Markdown — instantly, inside a hacker‑lab interface.
+        </p>
+        <div class="tool-hero-meta">
+          <span>🔁 Two‑way conversion</span>
+          <span>⚡ Instant output</span>
+          <span>🧹 Clean formatting</span>
+        </div>
+      </div>
+
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre># Hello Kevin
+→ &lt;h1&gt;Hello Kevin&lt;/h1&gt;
+
+&lt;strong&gt;Bold&lt;/strong&gt;
+→ **Bold**</pre>
+            </div>
+
+            <div class="tool-hero-badges">
+              <span>Mixed previews</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Convert Markdown ↔ HTML</h2>
+        <p>Paste Markdown or HTML and convert in either direction.</p>
+      </div>
+
+      <div class="tool-panel-body tool-panel-body-split">
+
+        <!-- Markdown Input -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Markdown</span>
+            <button class="pill-btn pill-btn-ghost" id="sampleMdBtn">Load sample</button>
+          </div>
+
+          <textarea id="mdInput" placeholder="# Hello world"></textarea>
+        </div>
+
+        <!-- HTML Output -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>HTML</span>
+            <button class="pill-btn pill-btn-ghost" id="copyHtmlBtn">Copy</button>
+          </div>
+
+          <textarea id="htmlOutput" readonly placeholder="Converted HTML will appear here..."></textarea>
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="tool-actions-row">
+        <div class="tool-actions-left">
+          <button class="pill-btn pill-btn-primary" id="mdToHtmlBtn">Markdown → HTML</button>
+          <button class="pill-btn pill-btn-ghost" id="htmlToMdBtn">HTML → Markdown</button>
+        </div>
+
+        <div class="tool-status" id="mdStatus">Waiting for input…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Markdown ↔ HTML Converter</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const md = document.getElementById("md");
-    const html = document.getElementById("html");
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    function mdToHtml(t) {
-      return t
-        .replace(/^###### (.*)$/gim, "<h6>$1</h6>")
-        .replace(/^##### (.*)$/gim, "<h5>$1</h5>")
-        .replace(/^#### (.*)$/gim, "<h4>$1</h4>")
-        .replace(/^### (.*)$/gim, "<h3>$1</h3>")
-        .replace(/^## (.*)$/gim, "<h2>$1</h2>")
-        .replace(/^# (.*)$/gim, "<h1>$1</h1>")
-        .replace(/\*\*(.*)\*\*/gim, "<b>$1</b>")
-        .replace(/\*(.*)\*/gim, "<i>$1</i>")
-        .replace(/\n/gim, "<br>");
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
     }
 
-    function htmlToMd(t) {
-      return t
-        .replace(/<h1>(.*?)<\/h1>/gim, "# $1\n")
-        .replace(/<h2>(.*?)<\/h2>/gim, "## $1\n")
-        .replace(/<h3>(.*?)<\/h3>/gim, "### $1\n")
-        .replace(/<b>(.*?)<\/b>/gim, "**$1**")
-        .replace(/<i>(.*?)<\/i>/gim, "*$1*")
-        .replace(/<br\s*\/?>/gim, "\n");
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Markdown ↔ HTML Logic
+    const mdInput = document.getElementById('mdInput');
+    const htmlOutput = document.getElementById('htmlOutput');
+    const mdStatus = document.getElementById('mdStatus');
+
+    const sampleMdBtn = document.getElementById('sampleMdBtn');
+    const copyHtmlBtn = document.getElementById('copyHtmlBtn');
+
+    const mdToHtmlBtn = document.getElementById('mdToHtmlBtn');
+    const htmlToMdBtn = document.getElementById('htmlToMdBtn');
+
+    function setMdStatus(text, ok = true) {
+      mdStatus.textContent = text;
+      mdStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
     }
 
-    document.getElementById("toHtml").onclick = () => html
+    // Minimal Markdown → HTML converter
+    function markdownToHtml(md) {
+      return md
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*)\*/gim, '<em>$1</em>')
+        .replace(/`(.*?)`/gim, '<code>$1</code>')
+        .replace(/\n$/gim, '<br>');
+    }
+
+    // Minimal HTML → Markdown converter
+    function htmlToMarkdown(html) {
+      return html
+        .replace(/<h1>(.*?)<\/h1>/gim, '# $1')
+        .replace(/<h2>(.*?)<\/h2>/gim, '## $1')
+        .replace(/<h3>(.*?)<\/h3>/gim, '### $1')
+        .replace(/<strong>(.*?)<\/strong>/gim, '**$1**')
+        .replace(/<em>(.*?)<\/em>/gim, '*$1*')
+        .replace(/<code>(.*?)<\/code>/gim, '`$1`')
+        .replace(/<br>/gim, '\n');
+    }
+
+    mdToHtmlBtn.addEventListener('click', () => {
+      const md = mdInput.value.trim();
+      if (!md) {
+        setMdStatus('No Markdown provided.', false);
+        return;
+      }
+      htmlOutput.value = markdownToHtml(md);
+      setMdStatus('Converted Markdown → HTML.', true);
+    });
+
+    htmlToMdBtn.addEventListener('click', () => {
+      const html = mdInput.value.trim();
+      if (!html) {
+        setMdStatus('No HTML provided.', false);
+        return;
+      }
+      htmlOutput.value = htmlToMarkdown(html);
+      setMdStatus('Converted HTML → Markdown.', true);
+    });
+
+    sampleMdBtn.addEventListener('click', () => {
+      mdInput.value = "# Hello Kevin\n\n**Bold text** and *italic text*.";
+      setMdStatus('Sample Markdown loaded.', true);
+    });
+
+    copyHtmlBtn.addEventListener('click', async () => {
+      if (!htmlOutput.value.trim()) {
+        setMdStatus('Nothing to copy.', false);
+        return;
+      }
+      await navigator.clipboard.writeText(htmlOutput.value);
+      setMdStatus('HTML copied.', true);
+    });
+  </script>
+
+</body>
+</html>
