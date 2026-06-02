@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice Generator - Tools for All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background:#f5f7fa; margin:0; padding:40px; }
+    h1 { color:#0a2540; }
+    input, textarea { width:100%; padding:6px; margin:4px 0; }
+    table { width:100%; border-collapse: collapse; margin-top:10px; }
+    th, td { border:1px solid #d0d7de; padding:6px; text-align:left; }
+    button { margin-top:10px; padding:8px 14px; }
+    a { color:#007bff; text-decoration:none; }
+    #total { font-weight:bold; margin-top:10px; }
+  </style>
+</head>
+<body>
+  <a href="../">← Back to Tools for All</a>
+  <h1>Invoice Generator</h1>
+
+  <label>Client Name:<input id="client"></label>
+  <label>Project / Description:<textarea id="desc"></textarea></label>
+
+  <table id="items">
+    <thead>
+      <tr><th>Item</th><th>Qty</th><th>Price</th><th>Line Total</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button id="add">Add Item</button>
+
+  <div id="total">Total: $0.00</div>
+
+  <script>
+    const tbody = document.querySelector('#items tbody');
+    const totalEl = document.getElementById('total');
+    const addBtn = document.getElementById('add');
+
+    function addRow() {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="name"></td>
+        <td><input type="number" class="qty" value="1" min="0"></td>
+        <td><input type="number" class="price" value="0" step="0.01" min="0"></td>
+        <td class="line">$0.00</td>
+      `;
+      tbody.appendChild(tr);
+      tr.querySelectorAll('input').forEach(i => i.addEventListener('input', updateTotals));
+      updateTotals();
+    }
+
+    function updateTotals() {
+      let total = 0;
+      tbody.querySelectorAll('tr').forEach(tr => {
+        const qty = parseFloat(tr.querySelector('.qty').value) || 0;
+        const price = parseFloat(tr.querySelector('.price').value) || 0;
+        const line = qty * price;
+        tr.querySelector('.line').textContent = '$' + line.toFixed(2);
+        total += line;
+      });
+      totalEl.textContent = 'Total: $' + total.toFixed(2);
+    }
+
+    addBtn.addEventListener('click', addRow);
+    addRow();
+  </script>
+</body>
+</html>
 
