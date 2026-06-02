@@ -1,70 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Invoice Generator</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Invoice Generator — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Invoice Generator</h1>
+
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <label>Client Name</label>
-    <input id="client">
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
 
-    <label>Project Description</label>
-    <textarea id="desc" rows="4"></textarea>
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Finance · Billing</div>
+        <h1>Invoice Generator</h1>
+        <p>
+          Create clean, professional invoices instantly — with line items, totals, tax, and downloadable output.
+        </p>
+        <div class="tool-hero-meta">
+          <span>🧾 Line items</span>
+          <span>💵 Auto totals</span>
+          <span>⬇️ Export‑ready</span>
+        </div>
+      </div>
 
-    <table id="items">
-      <thead>
-        <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
 
-    <button id="add">Add Item</button>
-    <button id="download">Download Invoice</button>
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre>invoice({
+  client: "Kevin",
+  items: [
+    { desc: "Web Design", qty: 1, price: 500 },
+    { desc: "Hosting", qty: 1, price: 20 }
+  ]
+})
+→ total: $520</pre>
+            </div>
 
-    <p id="total" style="margin-top:20px; font-size:1.2rem;">Total: $0.00</p>
-  </div>
+            <div class="tool-hero-badges">
+              <span>Mixed preview</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Create an Invoice</h2>
+        <p>Fill in the details below and generate a clean invoice instantly.</p>
+      </div>
+
+      <div class="tool-panel-body">
+
+        <div class="invoice-grid">
+
+          <!-- Left Column -->
+          <div class="invoice-left">
+
+            <label class="field-row">
+              <span>Client Name</span>
+              <input id="invClient" type="text" placeholder="e.g. Kevin Manzi" />
+            </label>
+
+            <label class="field-row">
+              <span>Your Business Name</span>
+              <input id="invBusiness" type="text" placeholder="e.g. Tools for All" />
+            </label>
+
+            <label class="field-row">
+              <span>Tax Rate (%)</span>
+              <input id="invTax" type="number" min="0" max="50" value="0" />
+            </label>
+
+            <h3 style="margin-top:12px;">Line Items</h3>
+
+            <div id="invItems"></div>
+
+            <button class="pill-btn pill-btn-ghost" id="addItemBtn" style="margin-top:10px;">
+              + Add Item
+            </button>
+
+          </div>
+
+          <!-- Right Column -->
+          <div class="invoice-right">
+            <div class="tool-column-header">
+              <span>Generated Invoice (JSON)</span>
+              <button class="pill-btn pill-btn-ghost" id="copyInvoiceBtn">Copy</button>
+            </div>
+
+            <textarea id="invOutput" readonly placeholder="Invoice JSON will appear here..."></textarea>
+
+            <button class="pill-btn pill-btn-primary" id="generateInvoiceBtn" style="margin-top:10px;">
+              Generate Invoice
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left"></div>
+        <div class="tool-status" id="invStatus">Waiting for input…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Invoice Generator</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const tbody = document.querySelector("#items tbody");
-    const totalEl = document.getElementById("total");
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    function addRow() {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td><input class="name"></td>
-        <td><input type="number" class="qty" value="1"></td>
-        <td><input type="number" class="price" value="0" step="0.01"></td>
-        <td class="line">$0.00</td>
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
+
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Invoice Logic
+    const invClient = document.getElementById('invClient');
+    const invBusiness = document.getElementById('invBusiness');
+    const invTax = document.getElementById('invTax');
+    const invItems = document.getElementById('invItems');
+    const invOutput = document.getElementById('invOutput');
+    const invStatus = document.getElementById('invStatus');
+
+    const addItemBtn = document.getElementById('addItemBtn');
+    const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
+    const copyInvoiceBtn = document.getElementById('copyInvoiceBtn');
+
+    function setInvStatus(text, ok = true) {
+      invStatus.textContent = text;
+      invStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    function createItemRow() {
+      const row = document.createElement('div');
+      row.className = 'field-row';
+      row.style.marginBottom = '6px';
+
+      row.innerHTML = `
+        <input class="item-desc" type="text" placeholder="Description" style="flex:2;" />
+        <input class="item-qty" type="number" min="1" value="1" style="width:70px;" />
+        <input class="item-price" type="number" min="0" step="0.01" placeholder="0.00" style="width:90px;" />
       `;
-      tbody.appendChild(tr);
-      tr.querySelectorAll("input").forEach(i => i.oninput = updateTotals);
-      updateTotals();
+
+      return row;
     }
 
-    function updateTotals() {
-      let total = 0;
-      tbody.querySelectorAll("tr").forEach(tr => {
-        const qty = parseFloat(tr.querySelector(".qty").value) || 0;
-        const price = parseFloat(tr.querySelector(".price").value) || 0;
-        const line = qty * price;
-        tr.querySelector(".line").textContent = "$" + line.toFixed(2);
-        total += line;
+    addItemBtn.addEventListener('click', () => {
+      invItems.appendChild(createItemRow());
+      setInvStatus('Added line item.', true);
+    });
+
+    // Add one default item
+    invItems.appendChild(createItemRow());
+
+    generateInvoiceBtn.addEventListener('click', () => {
+      const client = invClient.value.trim();
+      const business = invBusiness.value.trim();
+      const taxRate = parseFloat(invTax.value) || 0;
+
+      if (!client || !business) {
+        setInvStatus('Client and business name required.', false);
+        return;
+      }
+
+      const items = [];
+      const rows = invItems.querySelectorAll('.field-row');
+
+      rows.forEach(row => {
+        const desc = row.querySelector('.item-desc').value.trim();
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const price = parseFloat(row.querySelector('.item-price').value) || 0;
+
+        if (desc && qty > 0 && price >= 0) {
+          items.push({ desc, qty, price });
+        }
       });
-      totalEl.textContent = "Total: $" + total.toFixed(2);
-    }
 
-    document.getElementById("add").onclick = addRow;
-    document.getElementById("download").onclick = () => window.print();
+      if (items.length === 0) {
+        setInvStatus('Add at least one valid line item.', false);
+        return;
+      }
 
-    addRow();
+      const subtotal = items.reduce((sum, i) => sum + i.qty * i.price, 0);
+      const tax = subtotal * (taxRate / 100);
+      const total = subtotal + tax;
+
+      const invoice = {
+        client,
+        business,
+        taxRate,
+        items,
+        subtotal: subtotal.toFixed(2),
+        tax: tax.toFixed(2),
+        total: total.toFixed(2),
+        generated_at: new Date().toISOString()
+      };
+
+      invOutput.value = JSON.stringify(invoice, null, 2);
+      setInvStatus('Invoice generated.', true);
+    });
+
+    copyInvoiceBtn.addEventListener('click', async () => {
+      if (!invOutput.value.trim()) {
+        setInvStatus('Nothing to copy.', false);
+        return;
+      }
+      await navigator.clipboard.writeText(invOutput.value);
+      setInvStatus('Invoice copied.', true);
+    });
   </script>
+
 </body>
 </html>
