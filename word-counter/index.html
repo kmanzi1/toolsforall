@@ -1,39 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Word Counter - Tools for All</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Word Counter — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Word & Character Counter</h1>
+
+  <!-- Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <textarea id="text" rows="10" placeholder="Start typing..."></textarea>
+  <!-- Hacker-Lab Hero -->
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
 
-    <p style="margin-top:15px;">
-      Words: <span id="words">0</span> ·
-      Characters: <span id="chars">0</span> ·
-      No spaces: <span id="charsNoSpaces">0</span>
-    </p>
-  </div>
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Text · Analysis</div>
+        <h1>Word Counter</h1>
+        <p>
+          Paste or type text and instantly get word count, character count, sentence count, and reading time — all inside a hacker‑lab interface.
+        </p>
+        <div class="tool-hero-meta">
+          <span>⚡ Live counting</span>
+          <span>🧠 Smart parsing</span>
+          <span>📊 Reading time</span>
+        </div>
+      </div>
+
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+<pre>analyze("Hello world, Kevin!")
+→ words: 3
+→ chars: 20
+→ sentences: 1
+→ read_time: 0.01 min</pre>
+            </div>
+
+            <div class="tool-hero-badges">
+              <span>Real‑time stats</span>
+              <span>Monospace preview</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tool Layout -->
+  <main class="tool-layout">
+    <section class="tool-panel">
+
+      <div class="tool-panel-header">
+        <h2>Analyze your text</h2>
+        <p>Type or paste text below to see live statistics.</p>
+      </div>
+
+      <div class="tool-panel-body tool-panel-body-split">
+
+        <!-- Input -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Input Text</span>
+            <button class="pill-btn pill-btn-ghost" id="sampleTextBtn">Load sample</button>
+          </div>
+
+          <textarea id="wcInput" placeholder="Start typing here..."></textarea>
+        </div>
+
+        <!-- Output -->
+        <div class="tool-column">
+          <div class="tool-column-header">
+            <span>Statistics</span>
+          </div>
+
+          <div class="wc-stats-box">
+            <div class="wc-stat"><strong>Words:</strong> <span id="wcWords">0</span></div>
+            <div class="wc-stat"><strong>Characters:</strong> <span id="wcChars">0</span></div>
+            <div class="wc-stat"><strong>Sentences:</strong> <span id="wcSentences">0</span></div>
+            <div class="wc-stat"><strong>Reading Time:</strong> <span id="wcReadTime">0 min</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left"></div>
+        <div class="tool-status" id="wcStatus">Waiting for input…</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Word Counter</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const t = document.getElementById("text");
-    const w = document.getElementById("words");
-    const c = document.getElementById("chars");
-    const ns = document.getElementById("charsNoSpaces");
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    t.addEventListener("input", () => {
-      const v = t.value;
-      w.textContent = v.trim() ? v.trim().split(/\s+/).length : 0;
-      c.textContent = v.length;
-      ns.textContent = v.replace(/\s/g, "").length;
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
+
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Word Counter Logic
+    const wcInput = document.getElementById('wcInput');
+    const wcWords = document.getElementById('wcWords');
+    const wcChars = document.getElementById('wcChars');
+    const wcSentences = document.getElementById('wcSentences');
+    const wcReadTime = document.getElementById('wcReadTime');
+    const wcStatus = document.getElementById('wcStatus');
+    const sampleTextBtn = document.getElementById('sampleTextBtn');
+
+    function analyzeText(text) {
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const chars = text.length;
+      const sentences = (text.match(/[.!?]+/g) || []).length;
+      const readTime = (words / 200).toFixed(2);
+
+      wcWords.textContent = words;
+      wcChars.textContent = chars;
+      wcSentences.textContent = sentences;
+      wcReadTime.textContent = readTime + " min";
+
+      wcStatus.textContent = "Live analysis updated.";
+      wcStatus.className = "tool-status ok";
+    }
+
+    wcInput.addEventListener('input', () => {
+      const text = wcInput.value;
+      if (!text.trim()) {
+        wcWords.textContent = 0;
+        wcChars.textContent = 0;
+        wcSentences.textContent = 0;
+        wcReadTime.textContent = "0 min";
+        wcStatus.textContent = "Waiting for input…";
+        wcStatus.className = "tool-status";
+        return;
+      }
+      analyzeText(text);
+    });
+
+    sampleTextBtn.addEventListener('click', () => {
+      wcInput.value = "Kevin is building the cleanest tool suite on the internet. This Word Counter updates instantly.";
+      analyzeText(wcInput.value);
     });
   </script>
+
 </body>
 </html>
