@@ -1,60 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Password Generator</title>
-  <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Password Generator — Tools for All</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
-  <div class="tool-page">
-    <div class="tool-header">
-      <a class="back-link" href="../">← Back</a>
-      <h1>Password Generator</h1>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <span class="logo-text">Tools for All</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="../index.html#text-tools">Text</a>
+        <a href="../index.html#dev-tools">Developer</a>
+        <a href="../index.html#utility-tools">Utility</a>
+        <a href="../index.html#finance-tools">Finance</a>
+      </nav>
+
+      <button id="modeToggle" class="mode-toggle">🌙</button>
     </div>
+  </header>
 
-    <label>Password Length</label>
-    <input id="length" type="number" value="16" min="4" max="64">
+  <section class="tool-hero tool-hero-hacker">
+    <div class="tool-hero-inner">
+      <div class="tool-hero-copy">
+        <div class="hero-pill">Utility · Security</div>
+        <h1>Password Generator</h1>
+        <p>
+          Forge strong, random passwords in a dark hacker‑lab environment tuned for security‑minded users.
+        </p>
+        <div class="tool-hero-meta">
+          <span>🔐 Upper / lower / symbols</span>
+          <span>📏 Adjustable length</span>
+          <span>📋 One‑click copy</span>
+        </div>
+      </div>
 
-    <label><input type="checkbox" id="lower" checked> Lowercase</label>
-    <label><input type="checkbox" id="upper" checked> Uppercase</label>
-    <label><input type="checkbox" id="numbers" checked> Numbers</label>
-    <label><input type="checkbox" id="symbols" checked> Symbols</label>
+      <div class="tool-hero-panel">
+        <div class="tool-hero-panel-inner tool-hero-panel-hacker">
+          <div class="hero-panel-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="tool-hero-panel-body">
+            <div class="tool-hero-code tool-hero-code-hacker">
+              <pre>generatePassword({
+  length: 16,
+  symbols: true,
+  numbers: true
+}) → "k7!Qz#9pL2@vX1"</pre>
+            </div>
+            <div class="tool-hero-badges">
+              <span>Entropy‑focused</span>
+              <span>Monospace output</span>
+              <span>Theme aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <button id="generate" style="margin-top:15px;">Generate Password</button>
+  <main class="tool-layout">
+    <section class="tool-panel">
+      <div class="tool-panel-header">
+        <h2>Generate a secure password</h2>
+        <p>Choose your options, then generate a strong password with one click.</p>
+      </div>
 
-    <textarea id="output" rows="3" readonly style="margin-top:15px;"></textarea>
-  </div>
+      <div class="tool-panel-body">
+        <div class="password-grid">
+          <div class="password-controls">
+            <label class="field-row">
+              <span>Length</span>
+              <input id="pwLength" type="number" min="6" max="64" value="16" />
+            </label>
+
+            <label class="field-row">
+              <input id="pwUpper" type="checkbox" checked />
+              <span>Include uppercase letters (A‑Z)</span>
+            </label>
+
+            <label class="field-row">
+              <input id="pwLower" type="checkbox" checked />
+              <span>Include lowercase letters (a‑z)</span>
+            </label>
+
+            <label class="field-row">
+              <input id="pwNumbers" type="checkbox" checked />
+              <span>Include numbers (0‑9)</span>
+            </label>
+
+            <label class="field-row">
+              <input id="pwSymbols" type="checkbox" checked />
+              <span>Include symbols (!@#$…)</span>
+            </label>
+          </div>
+
+          <div class="password-output">
+            <div class="tool-column-header">
+              <span>Generated password</span>
+              <button class="pill-btn pill-btn-ghost" id="copyPwBtn">Copy</button>
+            </div>
+            <input id="pwOutput" type="text" readonly placeholder="Click Generate to create a password" />
+            <button class="pill-btn pill-btn-primary" id="generatePwBtn" style="margin-top:10px;">Generate</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-actions-row">
+        <div class="tool-actions-left"></div>
+        <div class="tool-status" id="pwStatus">Waiting for options…</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Tools for All — Password Generator</span>
+      <span>Built by Kevin Manzi</span>
+    </div>
+  </footer>
 
   <script>
-    const sets = {
-      lower: "abcdefghijklmnopqrstuvwxyz",
-      upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      numbers: "0123456789",
-      symbols: "!@#$%^&*()-_=+[]{};:,.<>/?"
-    };
+    // Theme toggle
+    const modeToggle = document.getElementById('modeToggle');
 
-    document.getElementById("generate").onclick = () => {
-      const length = parseInt(document.getElementById("length").value);
-      let chars = "";
+    function applyMode(mode) {
+      if (mode === 'light') {
+        document.body.classList.add('light');
+        modeToggle.textContent = '🌚';
+      } else {
+        document.body.classList.remove('light');
+        modeToggle.textContent = '🌙';
+      }
+    }
 
-      if (document.getElementById("lower").checked) chars += sets.lower;
-      if (document.getElementById("upper").checked) chars += sets.upper;
-      if (document.getElementById("numbers").checked) chars += sets.numbers;
-      if (document.getElementById("symbols").checked) chars += sets.symbols;
+    const savedMode = localStorage.getItem('tfa-mode') || 'dark';
+    applyMode(savedMode);
+
+    modeToggle.addEventListener('click', () => {
+      const next = document.body.classList.contains('light') ? 'dark' : 'light';
+      localStorage.setItem('tfa-mode', next);
+      applyMode(next);
+    });
+
+    // Password logic
+    const pwLength = document.getElementById('pwLength');
+    const pwUpper = document.getElementById('pwUpper');
+    const pwLower = document.getElementById('pwLower');
+    const pwNumbers = document.getElementById('pwNumbers');
+    const pwSymbols = document.getElementById('pwSymbols');
+    const pwOutput = document.getElementById('pwOutput');
+    const pwStatus = document.getElementById('pwStatus');
+    const generatePwBtn = document.getElementById('generatePwBtn');
+    const copyPwBtn = document.getElementById('copyPwBtn');
+
+    function setPwStatus(text, ok = true) {
+      pwStatus.textContent = text;
+      pwStatus.className = 'tool-status ' + (ok ? 'ok' : 'error');
+    }
+
+    function generatePassword() {
+      const length = Math.max(6, Math.min(64, parseInt(pwLength.value, 10) || 16));
+      let chars = '';
+      if (pwUpper.checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if (pwLower.checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+      if (pwNumbers.checked) chars += '0123456789';
+      if (pwSymbols.checked) chars += '!@#$%^&*()-_=+[]{};:,.<>/?';
 
       if (!chars) {
-        document.getElementById("output").value = "Select at least one character set.";
+        setPwStatus('Select at least one character set.', false);
+        return '';
+      }
+
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        const idx = Math.floor(Math.random() * chars.length);
+        result += chars[idx];
+      }
+      setPwStatus('Password generated.', true);
+      return result;
+    }
+
+    generatePwBtn.addEventListener('click', () => {
+      pwOutput.value = generatePassword();
+    });
+
+    copyPwBtn.addEventListener('click', async () => {
+      if (!pwOutput.value) {
+        setPwStatus('Nothing to copy yet.', false);
         return;
       }
-
-      let pass = "";
-      for (let i = 0; i < length; i++) {
-        pass += chars[Math.floor(Math.random() * chars.length)];
+      try {
+        await navigator.clipboard.writeText(pwOutput.value);
+        setPwStatus('Password copied to clipboard.', true);
+      } catch {
+        setPwStatus('Could not copy to clipboard.', false);
       }
-
-      document.getElementById("output").value = pass;
-    };
+    });
   </script>
+
 </body>
 </html>
